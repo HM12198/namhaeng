@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>남행열차 운영진 방</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=IBM+Plex+Sans+KR:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<header><div class="wrap"><h1 id="title"></h1><div class="who" id="who"></div></div></header>
+<nav id="nav" hidden><div class="wrap" role="tablist"></div></nav>
+<main><div class="wrap" id="main"></div></main>
+<div class="toast" id="toast" role="status"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="../config.js"></script>
+<script src="../app.js"></script>
+<script>
+const { h, sb, toast, fail, when, roleTag, ROLE_KO } = NH;
+
+async function setRole(p, role, user, redraw) {
+  const name = p.nickname || p.kakao_name || "이 회원";
+  const ask = { banned: `${name}님을 강퇴할까요? 사이트를 더 이상 못 봐요.`, staff: `${name}님을 운영진으로 임명할까요?` }[role];
+  if (ask && !confirm(ask)) return;
+  const { error } = await sb.from("profiles").update({ role }).eq("id", p.id);
+  if (error) return fail(error);
+  toast(`${name}: ${ROLE_KO[role]}`); redraw();
+}
+
+async function people(mode, user) {
+  const main = NH.$("main"), redraw = () => people(mode, user);
+  const { data, error } = await sb.rpc("staff_profiles");
+  if (error) return fail(error);
+  const list = data.filter(p => mode === "pending" ? p.role === "pending" : p.role !== "pending");
+  const isOwner = user.role === "owner";
+  main.replaceChildren(h("p", { class: "hint" }, mode === "pending"
+    ? "가입신청서를 확인한 뒤 승인해 주세요. 메모에 접수코드를 적어 두면 나중에 찾기 쉬워요."
+    : "강퇴하면 바로 사이트를 못 봐요. 운영진 임명·해임은 방장만 할 수 있어요."));
+  if (!list.length) main.append(h("p", { class: "hint" }, mode === "pending" ? "기다리는 사람이 없어요." : "아직 회원이 없어요."));
+  for (const p of list) {
+    const memo = h("input", { value: p.memo, maxlength: 200, placeholder: "운영진 메모 (접수코드 등)" });
+    const self = p.id === user.id, b = (label, role, cls = "") =>
+      h("button", { class: "btn small " + cls, onclick: () => setRole(p, role, user, redraw) }, label);
+    const actions = self || p.role === "owner" ? [] : mode === "pending"
+      ? [b("승인", "member", "primary"), b("거절", "banned", "danger")]
+      : [
+          p.role === "banned" ? b("강퇴 해제", "member") : null,
+          p.role === "member" && isOwner ? b("운영진 임명", "staff") : null,
+          p.role === "staff" && isOwner ? b("운영진 해임", "member") : null,
+          p.role === "member" || (p.role === "staff" && isOwner) ? b("강퇴", "banned", "danger") : null
+        ];
+    main.append(h("section", { class: "card" },
+      h("div", { class: "row" }, h("b", {}, p.nickname || "(닉네임 없음)"), roleTag(p.role)),
+      h("div", { class: "meta" }, `카카오 이름: ${p.kakao_name || "-"} · 처음 로그인 ${when(p.created_at)}`),
+      h("div", { class: "row" }, memo, h("button", { class: "btn small", onclick: async () => {
+        const { error } = await sb.from("profiles").update({ memo: memo.value.trim() }).eq("id", p.id);
+        error ? fail(error) : toast("메모 저장");
+      } }, "메모 저장")),
+      actions.some(Boolean) ? h("div", { class: "row" }, actions) : null));
+  }
+}
+
+NH.start("운영진 방", ["staff", "owner"], user => {
+  NH.tabs([["pending", "가입 승인"], ["members", "회원 관리"], ["staff", "운영진 게시판"]], key =>
+    key === "staff" ? NH.board("staff", user, { canWrite: true }) : people(key, user));
+});
+</script>
+</body>
+</html>
