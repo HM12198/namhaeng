@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-01T23:12:57+09:00",
+ "updated": "2026-11-01T23:15:56+09:00",
  "source": "KBO",
  "games": [
   {
@@ -8,7 +8,7 @@
    "opp": "SSG 랜더스",
    "home": false,
    "park": "인천 SSG 랜더스필드",
-   "tv": "M-T",
+   "tv": "MBC",
    "result": "패",
    "score": "6:7",
    "note": ""
@@ -19,7 +19,7 @@
    "opp": "SSG 랜더스",
    "home": false,
    "park": "인천 SSG 랜더스필드",
-   "tv": "SPO-T",
+   "tv": "SPOTV",
    "result": "패",
    "score": "6:11",
    "note": ""
@@ -30,7 +30,7 @@
    "opp": "LG 트윈스",
    "home": false,
    "park": "잠실야구장",
-   "tv": "KN-T",
+   "tv": "KBS N",
    "result": "승",
    "score": "7:2",
    "note": ""
@@ -41,7 +41,7 @@
    "opp": "LG 트윈스",
    "home": false,
    "park": "잠실야구장",
-   "tv": "KN-T",
+   "tv": "KBS N",
    "result": "패",
    "score": "2:7",
    "note": ""
@@ -52,7 +52,7 @@
    "opp": "LG 트윈스",
    "home": false,
    "park": "잠실야구장",
-   "tv": "KN-T",
+   "tv": "KBS N",
    "result": "패",
    "score": "1:2",
    "note": ""
@@ -63,7 +63,7 @@
    "opp": "NC 다이노스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "TVING KBS LIFE",
+   "tv": "TVING, KBS, LIFE",
    "result": "패",
    "score": "2:5",
    "note": ""
@@ -74,7 +74,7 @@
    "opp": "NC 다이노스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "KN-T",
+   "tv": "KBS N",
    "result": "패",
    "score": "0:6",
    "note": ""
@@ -85,7 +85,7 @@
    "opp": "NC 다이노스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "KN-T",
+   "tv": "KBS N",
    "result": "승",
    "score": "3:0",
    "note": ""
@@ -96,7 +96,7 @@
    "opp": "삼성 라이온즈",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "KN-T TVING",
+   "tv": "KBS N, TVING",
    "result": "패",
    "score": "3:10",
    "note": ""
@@ -107,7 +107,7 @@
    "opp": "삼성 라이온즈",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "KBS LIFE TVING",
+   "tv": "KBS, LIFE, TVING",
    "result": "승",
    "score": "15:5",
    "note": ""
@@ -118,7 +118,7 @@
    "opp": "삼성 라이온즈",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "KN-T",
+   "tv": "KBS N",
    "result": "취소",
    "score": "",
    "note": "우천취소"
@@ -129,7 +129,7 @@
    "opp": "한화 이글스",
    "home": false,
    "park": "대전 한화생명 볼파크",
-   "tv": "K-2T",
+   "tv": "KBS2",
    "result": "승",
    "score": "6:5",
    "note": ""
@@ -140,7 +140,7 @@
    "opp": "한화 이글스",
    "home": false,
    "park": "대전 한화생명 볼파크",
-   "tv": "S-T",
+   "tv": "SBS",
    "result": "승",
    "score": "6:5",
    "note": ""
@@ -151,7 +151,7 @@
    "opp": "한화 이글스",
    "home": false,
    "park": "대전 한화생명 볼파크",
-   "tv": "M-T",
+   "tv": "MBC",
    "result": "승",
    "score": "9:3",
    "note": ""
@@ -162,7 +162,7 @@
    "opp": "키움 히어로즈",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "KN-T",
+   "tv": "KBS N",
    "result": "승",
    "score": "6:2",
    "note": ""
@@ -173,7 +173,7 @@
    "opp": "키움 히어로즈",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "KN-T",
+   "tv": "KBS N",
    "result": "승",
    "score": "7:5",
    "note": ""
@@ -184,7 +184,7 @@
    "opp": "키움 히어로즈",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "KN-T",
+   "tv": "KBS N",
    "result": "승",
    "score": "5:1",
    "note": ""
@@ -195,7 +195,7 @@
    "opp": "두산 베어스",
    "home": false,
    "park": "잠실야구장",
-   "tv": "SPO-T",
+   "tv": "SPOTV",
    "result": "승",
    "score": "7:3",
    "note": ""
@@ -206,7 +206,7 @@
    "opp": "두산 베어스",
    "home": false,
    "park": "잠실야구장",
-   "tv": "SPO-T",
+   "tv": "SPOTV",
    "result": "패",
    "score": "4:5",
    "note": ""
@@ -217,7 +217,7 @@
    "opp": "두산 베어스",
    "home": false,
    "park": "잠실야구장",
-   "tv": "M-T",
+   "tv": "MBC",
    "result": "패",
    "score": "3:6",
    "note": ""
@@ -228,7 +228,7 @@
    "opp": "KT 위즈",
    "home": false,
    "park": "수원 KT 위즈파크",
-   "tv": "SPO-2T",
+   "tv": "SPOTV2",
    "result": "패",
    "score": "5:6",
    "note": ""
@@ -239,7 +239,7 @@
    "opp": "KT 위즈",
    "home": false,
    "park": "수원 KT 위즈파크",
-   "tv": "SPO-2T",
+   "tv": "SPOTV2",
    "result": "패",
    "score": "3:8",
    "note": ""
@@ -250,7 +250,7 @@
    "opp": "KT 위즈",
    "home": false,
    "park": "수원 KT 위즈파크",
-   "tv": "SPO-2T",
+   "tv": "SPOTV2",
    "result": "패",
    "score": "3:8",
    "note": ""
@@ -261,7 +261,7 @@
    "opp": "롯데 자이언츠",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "K-2T",
+   "tv": "KBS2",
    "result": "승",
    "score": "4:0",
    "note": ""
@@ -272,7 +272,7 @@
    "opp": "롯데 자이언츠",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SS-T",
+   "tv": "SBS Sports",
    "result": "승",
    "score": "4:3",
    "note": ""
@@ -283,7 +283,7 @@
    "opp": "롯데 자이언츠",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SS-T",
+   "tv": "SBS Sports",
    "result": "무",
    "score": "5:5",
    "note": ""
@@ -294,7 +294,7 @@
    "opp": "NC 다이노스",
    "home": false,
    "park": "창원 NC 파크",
-   "tv": "SS-T",
+   "tv": "SBS Sports",
    "result": "패",
    "score": "4:5",
    "note": ""
@@ -305,7 +305,7 @@
    "opp": "NC 다이노스",
    "home": false,
    "park": "창원 NC 파크",
-   "tv": "SS-T",
+   "tv": "SBS Sports",
    "result": "승",
    "score": "9:4",
    "note": ""
@@ -316,7 +316,7 @@
    "opp": "NC 다이노스",
    "home": false,
    "park": "창원 NC 파크",
-   "tv": "SS-T",
+   "tv": "SBS Sports",
    "result": "패",
    "score": "2:7",
    "note": ""
@@ -327,7 +327,7 @@
    "opp": "KT 위즈",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "MS-T",
+   "tv": "MBC SPORTS+",
    "result": "패",
    "score": "3:4",
    "note": ""
@@ -338,7 +338,7 @@
    "opp": "KT 위즈",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SS-T",
+   "tv": "SBS Sports",
    "result": "승",
    "score": "6:0",
    "note": ""
@@ -349,7 +349,7 @@
    "opp": "KT 위즈",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "MS-T",
+   "tv": "MBC SPORTS+",
    "result": "패",
    "score": "4:6",
    "note": ""
@@ -360,7 +360,7 @@
    "opp": "한화 이글스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "K-2T",
+   "tv": "KBS2",
    "result": "승",
    "score": "12:7",
    "note": ""
@@ -371,7 +371,7 @@
    "opp": "한화 이글스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SS-T",
+   "tv": "SBS Sports",
    "result": "패",
    "score": "2:7",
    "note": ""
@@ -382,7 +382,7 @@
    "opp": "한화 이글스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SS-T",
+   "tv": "SBS Sports",
    "result": "패",
    "score": "8:11",
    "note": ""
@@ -393,7 +393,7 @@
    "opp": "롯데 자이언츠",
    "home": false,
    "park": "사직야구장",
-   "tv": "SS-T",
+   "tv": "SBS Sports",
    "result": "승",
    "score": "8:2",
    "note": ""
@@ -404,7 +404,7 @@
    "opp": "롯데 자이언츠",
    "home": false,
    "park": "사직야구장",
-   "tv": "SS-T",
+   "tv": "SBS Sports",
    "result": "승",
    "score": "3:1",
    "note": ""
@@ -415,7 +415,7 @@
    "opp": "롯데 자이언츠",
    "home": false,
    "park": "사직야구장",
-   "tv": "SS-T",
+   "tv": "SBS Sports",
    "result": "패",
    "score": "3:7",
    "note": ""
@@ -426,7 +426,7 @@
    "opp": "두산 베어스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SPO-2T",
+   "tv": "SPOTV2",
    "result": "패",
    "score": "1:5",
    "note": ""
@@ -437,7 +437,7 @@
    "opp": "두산 베어스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SPO-2T",
+   "tv": "SPOTV2",
    "result": "승",
    "score": "9:2",
    "note": ""
@@ -448,7 +448,7 @@
    "opp": "두산 베어스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SPO-2T",
+   "tv": "SPOTV2",
    "result": "승",
    "score": "5:3",
    "note": ""
@@ -459,7 +459,7 @@
    "opp": "삼성 라이온즈",
    "home": false,
    "park": "대구 삼성 라이온즈 파크",
-   "tv": "K-2T",
+   "tv": "KBS2",
    "result": "승",
    "score": "5:4",
    "note": ""
@@ -470,7 +470,7 @@
    "opp": "삼성 라이온즈",
    "home": false,
    "park": "대구 삼성 라이온즈 파크",
-   "tv": "SPO-2T",
+   "tv": "SPOTV2",
    "result": "패",
    "score": "2:5",
    "note": ""
@@ -481,7 +481,7 @@
    "opp": "삼성 라이온즈",
    "home": false,
    "park": "대구 삼성 라이온즈 파크",
-   "tv": "SPO-2T",
+   "tv": "SPOTV2",
    "result": "승",
    "score": "16:7",
    "note": ""
@@ -492,7 +492,7 @@
    "opp": "LG 트윈스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SPO-T",
+   "tv": "SPOTV",
    "result": "승",
    "score": "14:0",
    "note": ""
@@ -503,7 +503,7 @@
    "opp": "LG 트윈스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SPO-T",
+   "tv": "SPOTV",
    "result": "취소",
    "score": "",
    "note": "우천취소"
@@ -514,7 +514,7 @@
    "opp": "LG 트윈스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SPO-T",
+   "tv": "SPOTV",
    "result": "패",
    "score": "3:5",
    "note": ""
@@ -525,7 +525,7 @@
    "opp": "SSG 랜더스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SPO-T",
+   "tv": "SPOTV",
    "result": "승",
    "score": "5:2",
    "note": ""
@@ -536,7 +536,7 @@
    "opp": "SSG 랜더스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SPO-T",
+   "tv": "SPOTV",
    "result": "승",
    "score": "5:4",
    "note": ""
@@ -547,7 +547,7 @@
    "opp": "SSG 랜더스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SPO-T",
+   "tv": "SPOTV",
    "result": "승",
    "score": "3:2",
    "note": ""
@@ -558,7 +558,7 @@
    "opp": "키움 히어로즈",
    "home": false,
    "park": "고척스카이돔",
-   "tv": "KN-T",
+   "tv": "KBS N",
    "result": "승",
    "score": "5:2",
    "note": ""
@@ -569,7 +569,7 @@
    "opp": "키움 히어로즈",
    "home": false,
    "park": "고척스카이돔",
-   "tv": "KN-T",
+   "tv": "KBS N",
    "result": "승",
    "score": "9:2",
    "note": ""
@@ -580,7 +580,7 @@
    "opp": "키움 히어로즈",
    "home": false,
    "park": "고척스카이돔",
-   "tv": "KN-T",
+   "tv": "KBS N",
    "result": "승",
    "score": "5:0",
    "note": ""
@@ -591,7 +591,7 @@
    "opp": "LG 트윈스",
    "home": false,
    "park": "잠실야구장",
-   "tv": "K-2T",
+   "tv": "KBS2",
    "result": "패",
    "score": "2:12",
    "note": ""
@@ -602,7 +602,7 @@
    "opp": "LG 트윈스",
    "home": false,
    "park": "잠실야구장",
-   "tv": "KN-T",
+   "tv": "KBS N",
    "result": "패",
    "score": "1:3",
    "note": ""
@@ -613,7 +613,7 @@
    "opp": "LG 트윈스",
    "home": false,
    "park": "잠실야구장",
-   "tv": "M-T",
+   "tv": "MBC",
    "result": "패",
    "score": "3:5",
    "note": ""
@@ -624,7 +624,7 @@
    "opp": "롯데 자이언츠",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "MS-T",
+   "tv": "MBC SPORTS+",
    "result": "승",
    "score": "5:4",
    "note": ""
@@ -635,7 +635,7 @@
    "opp": "롯데 자이언츠",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "MS-T",
+   "tv": "MBC SPORTS+",
    "result": "패",
    "score": "3:8",
    "note": ""
@@ -646,7 +646,7 @@
    "opp": "롯데 자이언츠",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "MS-T",
+   "tv": "MBC SPORTS+",
    "result": "승",
    "score": "10:0",
    "note": ""
@@ -657,7 +657,7 @@
    "opp": "삼성 라이온즈",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "K-2T",
+   "tv": "KBS2",
    "result": "승",
    "score": "5:2",
    "note": ""
@@ -668,7 +668,7 @@
    "opp": "삼성 라이온즈",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "MS-T",
+   "tv": "MBC SPORTS+",
    "result": "패",
    "score": "2:3",
    "note": ""
@@ -679,7 +679,7 @@
    "opp": "삼성 라이온즈",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "M-T",
+   "tv": "MBC",
    "result": "승",
    "score": "7:6",
    "note": ""
@@ -690,7 +690,7 @@
    "opp": "한화 이글스",
    "home": false,
    "park": "대전 한화생명 볼파크",
-   "tv": "KN-T",
+   "tv": "KBS N",
    "result": "승",
    "score": "6:4",
    "note": ""
@@ -701,7 +701,7 @@
    "opp": "한화 이글스",
    "home": false,
    "park": "대전 한화생명 볼파크",
-   "tv": "KN-T",
+   "tv": "KBS N",
    "result": "패",
    "score": "3:4",
    "note": ""
@@ -712,7 +712,7 @@
    "opp": "한화 이글스",
    "home": false,
    "park": "대전 한화생명 볼파크",
-   "tv": "KN-T",
+   "tv": "KBS N",
    "result": "패",
    "score": "1:5",
    "note": ""
@@ -723,7 +723,7 @@
    "opp": "두산 베어스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "KN-T",
+   "tv": "KBS N",
    "result": "패",
    "score": "2:4",
    "note": ""
@@ -734,7 +734,7 @@
    "opp": "두산 베어스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "KN-T",
+   "tv": "KBS N",
    "result": "승",
    "score": "2:1",
    "note": ""
@@ -745,7 +745,7 @@
    "opp": "두산 베어스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "KN-T",
+   "tv": "KBS N",
    "result": "패",
    "score": "1:8",
    "note": ""
@@ -756,7 +756,7 @@
    "opp": "LG 트윈스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SS-T",
+   "tv": "SBS Sports",
    "result": "패",
    "score": "2:8",
    "note": ""
@@ -767,7 +767,7 @@
    "opp": "LG 트윈스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SS-T",
+   "tv": "SBS Sports",
    "result": "승",
    "score": "5:4",
    "note": ""
@@ -778,7 +778,7 @@
    "opp": "LG 트윈스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "S-T",
+   "tv": "SBS",
    "result": "승",
    "score": "4:2",
    "note": ""
@@ -789,7 +789,7 @@
    "opp": "KT 위즈",
    "home": false,
    "park": "수원 KT 위즈파크",
-   "tv": "KN-T",
+   "tv": "KBS N",
    "result": "승",
    "score": "11:3",
    "note": ""
@@ -800,7 +800,7 @@
    "opp": "KT 위즈",
    "home": false,
    "park": "수원 KT 위즈파크",
-   "tv": "KN-T",
+   "tv": "KBS N",
    "result": "패",
    "score": "9:10",
    "note": ""
@@ -811,7 +811,7 @@
    "opp": "KT 위즈",
    "home": false,
    "park": "수원 KT 위즈파크",
-   "tv": "SS-T",
+   "tv": "SBS Sports",
    "result": "승",
    "score": "11:5",
    "note": ""
@@ -822,7 +822,7 @@
    "opp": "키움 히어로즈",
    "home": false,
    "park": "고척스카이돔",
-   "tv": "SPO-T",
+   "tv": "SPOTV",
    "result": "승",
    "score": "7:3",
    "note": ""
@@ -833,7 +833,7 @@
    "opp": "키움 히어로즈",
    "home": false,
    "park": "고척스카이돔",
-   "tv": "SPO-T",
+   "tv": "SPOTV",
    "result": "승",
    "score": "10:3",
    "note": ""
@@ -844,7 +844,7 @@
    "opp": "키움 히어로즈",
    "home": false,
    "park": "고척스카이돔",
-   "tv": "SPO-T",
+   "tv": "SPOTV",
    "result": "승",
    "score": "9:4",
    "note": ""
@@ -855,7 +855,7 @@
    "opp": "두산 베어스",
    "home": false,
    "park": "잠실야구장",
-   "tv": "SS-T",
+   "tv": "SBS Sports",
    "result": "패",
    "score": "2:3",
    "note": ""
@@ -866,7 +866,7 @@
    "opp": "두산 베어스",
    "home": false,
    "park": "잠실야구장",
-   "tv": "SS-T",
+   "tv": "SBS Sports",
    "result": "패",
    "score": "1:8",
    "note": ""
@@ -877,7 +877,7 @@
    "opp": "두산 베어스",
    "home": false,
    "park": "잠실야구장",
-   "tv": "SS-T",
+   "tv": "SBS Sports",
    "result": "승",
    "score": "12:1",
    "note": ""
@@ -888,7 +888,7 @@
    "opp": "SSG 랜더스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "MS-T",
+   "tv": "MBC SPORTS+",
    "result": "승",
    "score": "10:3",
    "note": ""
@@ -899,7 +899,7 @@
    "opp": "SSG 랜더스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "MS-T",
+   "tv": "MBC SPORTS+",
    "result": "무",
    "score": "6:6",
    "note": ""
@@ -910,7 +910,7 @@
    "opp": "SSG 랜더스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "MS-T",
+   "tv": "MBC SPORTS+",
    "result": "승",
    "score": "8:7",
    "note": ""
@@ -921,7 +921,7 @@
    "opp": "NC 다이노스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "MS-T",
+   "tv": "MBC SPORTS+",
    "result": "패",
    "score": "3:11",
    "note": ""
@@ -932,7 +932,7 @@
    "opp": "NC 다이노스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SS-T",
+   "tv": "SBS Sports",
    "result": "패",
    "score": "4:5",
    "note": ""
@@ -943,7 +943,7 @@
    "opp": "NC 다이노스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SS-T",
+   "tv": "SBS Sports",
    "result": "",
    "score": "",
    "note": "그라운드사정"
@@ -954,7 +954,7 @@
    "opp": "롯데 자이언츠",
    "home": false,
    "park": "사직야구장",
-   "tv": "SPO-T",
+   "tv": "SPOTV",
    "result": "패",
    "score": "2:10",
    "note": ""
@@ -965,7 +965,7 @@
    "opp": "롯데 자이언츠",
    "home": false,
    "park": "사직야구장",
-   "tv": "SPO-T",
+   "tv": "SPOTV",
    "result": "패",
    "score": "3:11",
    "note": ""
@@ -976,7 +976,7 @@
    "opp": "롯데 자이언츠",
    "home": false,
    "park": "사직야구장",
-   "tv": "SPO-T",
+   "tv": "SPOTV",
    "result": "승",
    "score": "5:2",
    "note": ""
@@ -987,7 +987,7 @@
    "opp": "SSG 랜더스",
    "home": false,
    "park": "인천 SSG 랜더스필드",
-   "tv": "SPO-2T",
+   "tv": "SPOTV2",
    "result": "패",
    "score": "0:6",
    "note": ""
@@ -998,7 +998,7 @@
    "opp": "SSG 랜더스",
    "home": false,
    "park": "인천 SSG 랜더스필드",
-   "tv": "SPO-2T",
+   "tv": "SPOTV2",
    "result": "승",
    "score": "6:3",
    "note": ""
@@ -1009,7 +1009,7 @@
    "opp": "SSG 랜더스",
    "home": false,
    "park": "인천 SSG 랜더스필드",
-   "tv": "SPO-2T",
+   "tv": "SPOTV2",
    "result": "승",
    "score": "12:2",
    "note": ""
@@ -1020,7 +1020,7 @@
    "opp": "SSG 랜더스",
    "home": false,
    "park": "인천 SSG 랜더스필드",
-   "tv": "SPO-2T",
+   "tv": "SPOTV2",
    "result": "승",
    "score": "9:5",
    "note": ""
@@ -1031,7 +1031,7 @@
    "opp": "한화 이글스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "MS-T",
+   "tv": "MBC SPORTS+",
    "result": "승",
    "score": "7:3",
    "note": ""
@@ -1042,7 +1042,7 @@
    "opp": "한화 이글스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "MS-T",
+   "tv": "MBC SPORTS+",
    "result": "패",
    "score": "3:7",
    "note": ""
@@ -1053,7 +1053,7 @@
    "opp": "한화 이글스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "MS-T",
+   "tv": "MBC SPORTS+",
    "result": "패",
    "score": "3:9",
    "note": ""
@@ -1064,7 +1064,7 @@
    "opp": "키움 히어로즈",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SPO-2T",
+   "tv": "SPOTV2",
    "result": "패",
    "score": "5:8",
    "note": ""
@@ -1075,7 +1075,7 @@
    "opp": "키움 히어로즈",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SPO-2T",
+   "tv": "SPOTV2",
    "result": "승",
    "score": "9:5",
    "note": ""
@@ -1086,7 +1086,7 @@
    "opp": "키움 히어로즈",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SPO-2T",
+   "tv": "SPOTV2",
    "result": "패",
    "score": "3:8",
    "note": ""
@@ -1097,7 +1097,7 @@
    "opp": "삼성 라이온즈",
    "home": false,
    "park": "대구 삼성 라이온즈 파크",
-   "tv": "SPO-T",
+   "tv": "SPOTV",
    "result": "패",
    "score": "5:12",
    "note": ""
@@ -1108,7 +1108,7 @@
    "opp": "삼성 라이온즈",
    "home": false,
    "park": "대구 삼성 라이온즈 파크",
-   "tv": "SPO-T",
+   "tv": "SPOTV",
    "result": "승",
    "score": "9:4",
    "note": ""
@@ -1119,7 +1119,7 @@
    "opp": "삼성 라이온즈",
    "home": false,
    "park": "대구 삼성 라이온즈 파크",
-   "tv": "SPO-T",
+   "tv": "SPOTV",
    "result": "승",
    "score": "12:3",
    "note": ""
@@ -1130,7 +1130,7 @@
    "opp": "NC 다이노스",
    "home": false,
    "park": "창원 NC 파크",
-   "tv": "SPO-T",
+   "tv": "SPOTV",
    "result": "패",
    "score": "4:10",
    "note": ""
@@ -1141,7 +1141,7 @@
    "opp": "NC 다이노스",
    "home": false,
    "park": "창원 NC 파크",
-   "tv": "SPO-T",
+   "tv": "SPOTV",
    "result": "취소",
    "score": "",
    "note": "폭염취소"
@@ -1152,7 +1152,7 @@
    "opp": "NC 다이노스",
    "home": false,
    "park": "창원 NC 파크",
-   "tv": "SPO-T",
+   "tv": "SPOTV",
    "result": "취소",
    "score": "",
    "note": "폭염취소"
@@ -1163,7 +1163,7 @@
    "opp": "KT 위즈",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SPO-T",
+   "tv": "SPOTV",
    "result": "취소",
    "score": "",
    "note": "폭염취소"
@@ -1174,7 +1174,7 @@
    "opp": "KT 위즈",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SPO-T",
+   "tv": "SPOTV",
    "result": "취소",
    "score": "",
    "note": "폭염취소"
@@ -1185,7 +1185,7 @@
    "opp": "KT 위즈",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SPO-T",
+   "tv": "SPOTV",
    "result": "취소",
    "score": "",
    "note": "폭염취소"
@@ -1196,7 +1196,7 @@
    "opp": "LG 트윈스",
    "home": false,
    "park": "잠실야구장",
-   "tv": "SS-T",
+   "tv": "SBS Sports",
    "result": "취소",
    "score": "",
    "note": "폭염취소"
@@ -1207,7 +1207,7 @@
    "opp": "LG 트윈스",
    "home": false,
    "park": "잠실야구장",
-   "tv": "SS-T",
+   "tv": "SBS Sports",
    "result": "취소",
    "score": "",
    "note": "폭염취소"
@@ -1218,7 +1218,7 @@
    "opp": "LG 트윈스",
    "home": false,
    "park": "잠실야구장",
-   "tv": "SS-T",
+   "tv": "SBS Sports",
    "result": "취소",
    "score": "",
    "note": "폭염취소"
@@ -1229,7 +1229,7 @@
    "opp": "삼성 라이온즈",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "KN-T",
+   "tv": "KBS N",
    "result": "승",
    "score": "3:1",
    "note": ""
@@ -1240,7 +1240,7 @@
    "opp": "삼성 라이온즈",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "KN-T",
+   "tv": "KBS N",
    "result": "승",
    "score": "7:2",
    "note": ""
@@ -1251,7 +1251,7 @@
    "opp": "삼성 라이온즈",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "KN-T",
+   "tv": "KBS N",
    "result": "패",
    "score": "8:9",
    "note": ""
@@ -1262,7 +1262,7 @@
    "opp": "두산 베어스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SS-T",
+   "tv": "SBS Sports",
    "result": "패",
    "score": "4:10",
    "note": ""
@@ -1273,7 +1273,7 @@
    "opp": "두산 베어스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SS-T",
+   "tv": "SBS Sports",
    "result": "승",
    "score": "6:1",
    "note": ""
@@ -1284,7 +1284,7 @@
    "opp": "두산 베어스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SS-T",
+   "tv": "SBS Sports",
    "result": "승",
    "score": "2:1",
    "note": ""
@@ -1295,7 +1295,7 @@
    "opp": "한화 이글스",
    "home": false,
    "park": "대전 한화생명 볼파크",
-   "tv": "SPO-2T",
+   "tv": "SPOTV2",
    "result": "승",
    "score": "4:3",
    "note": ""
@@ -1306,7 +1306,7 @@
    "opp": "한화 이글스",
    "home": false,
    "park": "대전 한화생명 볼파크",
-   "tv": "SPO-2T",
+   "tv": "SPOTV2",
    "result": "승",
    "score": "6:3",
    "note": ""
@@ -1317,7 +1317,7 @@
    "opp": "한화 이글스",
    "home": false,
    "park": "대전 한화생명 볼파크",
-   "tv": "SPO-2T",
+   "tv": "SPOTV2",
    "result": "승",
    "score": "10:6",
    "note": ""
@@ -1328,7 +1328,7 @@
    "opp": "키움 히어로즈",
    "home": false,
    "park": "고척스카이돔",
-   "tv": "SPO-2T",
+   "tv": "SPOTV2",
    "result": "승",
    "score": "11:1",
    "note": ""
@@ -1339,7 +1339,7 @@
    "opp": "키움 히어로즈",
    "home": false,
    "park": "고척스카이돔",
-   "tv": "SPO-2T",
+   "tv": "SPOTV2",
    "result": "패",
    "score": "1:3",
    "note": ""
@@ -1350,7 +1350,7 @@
    "opp": "키움 히어로즈",
    "home": false,
    "park": "고척스카이돔",
-   "tv": "S-T",
+   "tv": "SBS",
    "result": "패",
    "score": "7:8",
    "note": ""
@@ -1361,7 +1361,7 @@
    "opp": "롯데 자이언츠",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SPO-2T",
+   "tv": "SPOTV2",
    "result": "승",
    "score": "8:5",
    "note": ""
@@ -1372,7 +1372,7 @@
    "opp": "롯데 자이언츠",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SPO-2T",
+   "tv": "SPOTV2",
    "result": "승",
    "score": "16:11",
    "note": ""
@@ -1383,7 +1383,7 @@
    "opp": "롯데 자이언츠",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SPO-2T",
+   "tv": "SPOTV2",
    "result": "취소",
    "score": "",
    "note": "우천취소"
@@ -1394,7 +1394,7 @@
    "opp": "SSG 랜더스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SS-T",
+   "tv": "SBS Sports",
    "result": "취소",
    "score": "",
    "note": "우천취소"
@@ -1405,7 +1405,7 @@
    "opp": "SSG 랜더스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SS-T",
+   "tv": "SBS Sports",
    "result": "승",
    "score": "2:1",
    "note": ""
@@ -1416,7 +1416,7 @@
    "opp": "SSG 랜더스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SS-T",
+   "tv": "SBS Sports",
    "result": "취소",
    "score": "",
    "note": "우천취소"
@@ -1427,7 +1427,7 @@
    "opp": "NC 다이노스",
    "home": false,
    "park": "창원 NC 파크",
-   "tv": "MS-T",
+   "tv": "MBC SPORTS+",
    "result": "패",
    "score": "2:7",
    "note": ""
@@ -1438,7 +1438,7 @@
    "opp": "NC 다이노스",
    "home": false,
    "park": "창원 NC 파크",
-   "tv": "MS-T",
+   "tv": "MBC SPORTS+",
    "result": "패",
    "score": "2:3",
    "note": ""
@@ -1449,7 +1449,7 @@
    "opp": "NC 다이노스",
    "home": false,
    "park": "창원 NC 파크",
-   "tv": "MS-T",
+   "tv": "MBC SPORTS+",
    "result": "취소",
    "score": "",
    "note": "우천취소"
@@ -1460,7 +1460,7 @@
    "opp": "KT 위즈",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "KN-T",
+   "tv": "KBS N",
    "result": "승",
    "score": "4:3",
    "note": ""
@@ -1471,7 +1471,7 @@
    "opp": "KT 위즈",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "KN-T",
+   "tv": "KBS N",
    "result": "승",
    "score": "6:3",
    "note": ""
@@ -1482,7 +1482,7 @@
    "opp": "KT 위즈",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "KN-T",
+   "tv": "KBS N",
    "result": "승",
    "score": "8:3",
    "note": ""
@@ -1493,7 +1493,7 @@
    "opp": "삼성 라이온즈",
    "home": false,
    "park": "대구 삼성 라이온즈 파크",
-   "tv": "SPO-T",
+   "tv": "SPOTV",
    "result": "패",
    "score": "4:6",
    "note": ""
@@ -1504,7 +1504,7 @@
    "opp": "NC 다이노스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SPO-2T",
+   "tv": "SPOTV2",
    "result": "패",
    "score": "4:5",
    "note": ""
@@ -1515,7 +1515,7 @@
    "opp": "NC 다이노스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "MS-T",
+   "tv": "MBC SPORTS+",
    "result": "패",
    "score": "1:2",
    "note": ""
@@ -1526,7 +1526,7 @@
    "opp": "SSG 랜더스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SPO-T",
+   "tv": "SPOTV",
    "result": "승",
    "score": "5:2",
    "note": ""
@@ -1537,7 +1537,7 @@
    "opp": "KT 위즈",
    "home": false,
    "park": "수원 KT 위즈파크",
-   "tv": "KN-T",
+   "tv": "KBS N",
    "result": "패",
    "score": "2:6",
    "note": ""
@@ -1548,7 +1548,7 @@
    "opp": "한화 이글스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SS-T",
+   "tv": "SBS Sports",
    "result": "승",
    "score": "9:2",
    "note": ""
@@ -1559,7 +1559,7 @@
    "opp": "SSG 랜더스",
    "home": false,
    "park": "인천 SSG 랜더스필드",
-   "tv": "MS-T",
+   "tv": "MBC SPORTS+",
    "result": "패",
    "score": "3:6",
    "note": ""
@@ -1570,7 +1570,7 @@
    "opp": "키움 히어로즈",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SPO-2T MS-T",
+   "tv": "SPOTV2, MBC SPORTS+",
    "result": "승",
    "score": "2:0",
    "note": ""
@@ -1581,7 +1581,7 @@
    "opp": "NC 다이노스",
    "home": false,
    "park": "창원 NC 파크",
-   "tv": "KN-T",
+   "tv": "KBS N",
    "result": "승",
    "score": "5:1",
    "note": ""
@@ -1592,7 +1592,7 @@
    "opp": "NC 다이노스",
    "home": false,
    "park": "창원 NC 파크",
-   "tv": "SS-T",
+   "tv": "SBS Sports",
    "result": "승",
    "score": "8:6",
    "note": ""
@@ -1603,7 +1603,7 @@
    "opp": "두산 베어스",
    "home": false,
    "park": "잠실야구장",
-   "tv": "SPO-2T",
+   "tv": "SPOTV2",
    "result": "패",
    "score": "2:3",
    "note": ""
@@ -1614,7 +1614,7 @@
    "opp": "LG 트윈스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SPO-T",
+   "tv": "SPOTV",
    "result": "승",
    "score": "5:1",
    "note": ""
@@ -1625,7 +1625,7 @@
    "opp": "LG 트윈스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SS-T",
+   "tv": "SBS Sports",
    "result": "취소",
    "score": "",
    "note": "우천취소"
@@ -1636,7 +1636,7 @@
    "opp": "KT 위즈",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "MS-T",
+   "tv": "MBC SPORTS+",
    "result": "패",
    "score": "5:8",
    "note": ""
@@ -1647,7 +1647,7 @@
    "opp": "KT 위즈",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SPO-2T",
+   "tv": "SPOTV2",
    "result": "패",
    "score": "2:3",
    "note": ""
@@ -1658,7 +1658,7 @@
    "opp": "KT 위즈",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "KN-T",
+   "tv": "KBS N",
    "result": "패",
    "score": "5:7",
    "note": ""
@@ -1669,7 +1669,7 @@
    "opp": "LG 트윈스",
    "home": false,
    "park": "잠실야구장",
-   "tv": "KN-T",
+   "tv": "KBS N",
    "result": "승",
    "score": "5:4",
    "note": ""
@@ -1680,7 +1680,7 @@
    "opp": "LG 트윈스",
    "home": false,
    "park": "잠실야구장",
-   "tv": "SS-T",
+   "tv": "SBS Sports",
    "result": "승",
    "score": "6:5",
    "note": ""
@@ -1691,7 +1691,7 @@
    "opp": "LG 트윈스",
    "home": false,
    "park": "잠실야구장",
-   "tv": "SPO-2T",
+   "tv": "SPOTV2",
    "result": "승",
    "score": "6:4",
    "note": ""
@@ -1702,7 +1702,7 @@
    "opp": "삼성 라이온즈",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "MS-T",
+   "tv": "MBC SPORTS+",
    "result": "패",
    "score": "4:5",
    "note": ""
@@ -1713,7 +1713,7 @@
    "opp": "롯데 자이언츠",
    "home": false,
    "park": "사직야구장",
-   "tv": "SPO-T",
+   "tv": "SPOTV",
    "result": "승",
    "score": "12:4",
    "note": ""
@@ -1724,7 +1724,7 @@
    "opp": "NC 다이노스",
    "home": false,
    "park": "창원 NC 파크",
-   "tv": "SS-T",
+   "tv": "SBS Sports",
    "result": "승",
    "score": "7:2",
    "note": ""
@@ -1735,7 +1735,7 @@
    "opp": "SSG 랜더스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "SPO-T",
+   "tv": "SPOTV",
    "result": "승",
    "score": "8:5",
    "note": ""
@@ -1746,7 +1746,7 @@
    "opp": "롯데 자이언츠",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "KN-T SPO-T",
+   "tv": "KBS N, SPOTV",
    "result": "패",
    "score": "1:4",
    "note": ""
@@ -1757,7 +1757,7 @@
    "opp": "LG 트윈스",
    "home": true,
    "park": "광주-기아 챔피언스 필드",
-   "tv": "MS-T",
+   "tv": "MBC SPORTS+",
    "result": "승",
    "score": "4:2",
    "note": ""
