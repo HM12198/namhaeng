@@ -9,14 +9,16 @@ const Gallery = (() => {
 
   // 서명 링크 (같은 화면에서 여러 번 부르지 않게 잠깐 기억)
   const cache = new Map();
+  // 저장소 경로 대신 사이트 안 주소(assets/...)를 쓴 사진도 있다 (방장이 올린 배너 등)
+  const isUrl = p => /^(assets\/|https:\/\/)/.test(p);
   async function urls(paths) {
-    const need = paths.filter(p => !cache.has(p));
+    const need = paths.filter(p => !cache.has(p) && !isUrl(p));
     if (need.length) {
       const { data, error } = await store().createSignedUrls(need, 3600);
       if (error) console.error(error);
       (data || []).forEach(d => d.signedUrl && cache.set(d.path, d.signedUrl));
     }
-    return paths.map(p => cache.get(p) || "");
+    return paths.map(p => isUrl(p) ? p : cache.get(p) || "");
   }
 
   function shrink(file, size) {
@@ -85,7 +87,7 @@ const Gallery = (() => {
   }
 
   async function remove(photos) {
-    const paths = (photos || []).flatMap(x => [x.p, x.t]);
+    const paths = (photos || []).flatMap(x => [x.p, x.t]).filter(p => !isUrl(p));
     if (paths.length) { const { error } = await store().remove(paths); if (error) console.error(error); }
   }
 
