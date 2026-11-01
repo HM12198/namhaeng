@@ -108,7 +108,7 @@ const NH = (() => {
           toast("올렸어요"); board(name, user, { canWrite });
         } }, "올리기"))));
     }
-    const { data, error } = await sb.from("posts").select("id,title,body,pinned,created_at,author,profiles(nickname,kakao_name)")
+    const { data, error } = await sb.from("posts").select("id,title,body,pinned,created_at,author,profiles!posts_author_fkey(nickname,kakao_name)")
       .eq("board", name).order("pinned", { ascending: false }).order("created_at", { ascending: false }).limit(100);
     if (error) return fail(error);
     if (!data.length) box.append(h("p", { class: "hint" }, "아직 글이 없어요."));

@@ -139,7 +139,7 @@ const Cafe = (() => {
   async function list(board, keyword, top = []) {
     const title = keyword ? `"${keyword}" 검색 결과` : board ? NAME[board] : "전체글보기";
     const canWrite = board ? (WRITABLE.includes(board) || (board === "notice" && isStaff)) : false;
-    let q = sb.from("posts").select("id,board,title,pinned,created_at,meta,profiles(nickname,kakao_name),comments(count),attendees(count)").neq("board", "staff");
+    let q = sb.from("posts").select("id,board,title,pinned,created_at,meta,profiles!posts_author_fkey(nickname,kakao_name),comments(count),attendees(count)").neq("board", "staff");
     if (board) q = q.eq("board", board);
     if (keyword) q = q.ilike("title", `%${keyword.replace(/[%_]/g, "")}%`);
     const { data, error } = await q.order("pinned", { ascending: false }).order("created_at", { ascending: false }).limit(100);
@@ -159,7 +159,7 @@ const Cafe = (() => {
   }
 
   async function post(id) {
-    const { data: p, error } = await sb.from("posts").select("id,board,title,body,pinned,created_at,author,meta,profiles(nickname,kakao_name)").eq("id", id).maybeSingle();
+    const { data: p, error } = await sb.from("posts").select("id,board,title,body,pinned,created_at,author,meta,profiles!posts_author_fkey(nickname,kakao_name)").eq("id", id).maybeSingle();
     if (error) return fail(error);
     if (!p) return content.replaceChildren(h("p", { class: "empty" }, "없는 글이거나 볼 수 없는 글이에요."), h("a", { class: "btn", href: "#all" }, "목록"));
     const mine = p.author === user.id;
@@ -190,7 +190,7 @@ const Cafe = (() => {
     const box = h("section", { class: "attend" });
     const nameOf = a => a.profiles?.nickname || a.profiles?.kakao_name || "알 수 없음";
     async function load() {
-      const { data, error } = await sb.from("attendees").select("user_id,created_at,profiles(nickname,kakao_name)").eq("post_id", p.id).order("created_at");
+      const { data, error } = await sb.from("attendees").select("user_id,created_at,profiles!attendees_user_id_fkey(nickname,kakao_name)").eq("post_id", p.id).order("created_at");
       if (error) return fail(error);
       const joined = data.some(a => a.user_id === user.id), full = data.length >= p.meta.people;
       const closed = p.meta.status === "closed";
@@ -224,7 +224,7 @@ const Cafe = (() => {
     const box = h("section", { class: "comments" });
     const input = h("textarea", { maxlength: 1000, rows: 3, placeholder: "댓글을 남겨 주세요" });
     async function load() {
-      const { data, error } = await sb.from("comments").select("id,body,created_at,author,profiles(nickname,kakao_name)").eq("post_id", p.id).order("created_at");
+      const { data, error } = await sb.from("comments").select("id,body,created_at,author,profiles!comments_author_fkey(nickname,kakao_name)").eq("post_id", p.id).order("created_at");
       if (error) return fail(error);
       box.replaceChildren(h("h3", {}, `댓글 ${data.length}`),
         h("ul", { class: "cm-list" }, data.map(c => h("li", {},
