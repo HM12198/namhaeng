@@ -83,6 +83,7 @@ const Cafe = (() => {
           const { error } = await sb.from("posts").update({ pinned: !p.pinned }).eq("id", p.id);
           error ? fail(error) : (toast(p.pinned ? "고정 해제" : "상단 고정"), post(id));
         } }, p.pinned ? "고정 해제" : "상단 고정") : null,
+        mine || isStaff ? h("a", { class: "btn small", href: "#edit/" + p.id }, "수정") : null,
         mine || isStaff ? h("button", { class: "btn small danger", onclick: async () => {
           if (!confirm("이 글을 지울까요?")) return;
           const { error } = await sb.from("posts").delete().eq("id", p.id);
@@ -91,22 +92,28 @@ const Cafe = (() => {
         h("a", { class: "btn small", href: "#board/" + p.board }, "목록"))));
   }
 
-  function write(board) {
+  // 새 글이면 old 없이, 수정이면 old = 기존 글
+  function write(board, old) {
     const boards = [...WRITABLE, ...(isStaff ? ["notice"] : [])];
+    if (old) board = old.board;
     if (!boards.includes(board)) board = "free";
     const sel = h("select", { "aria-label": "게시판" }, boards.map(b => h("option", { value: b, selected: b === board }, NAME[b])));
     const title = h("input", { maxlength: 80, placeholder: "제목을 입력해 주세요" });
     const body = h("textarea", { maxlength: 5000, placeholder: "내용을 입력해 주세요", rows: 12 });
-    content.replaceChildren(h("section", { class: "editor" }, h("h2", {}, "카페 글쓰기"), sel, title, body,
-      h("div", { class: "row end" }, h("a", { class: "btn", href: "#board/" + board }, "취소"),
+    if (old) { title.value = old.title; body.value = old.body || ""; }
+    content.replaceChildren(h("section", { class: "editor" }, h("h2", {}, old ? "글 수정" : "카페 글쓰기"), sel, title, body,
+      h("div", { class: "row end" }, h("a", { class: "btn", href: old ? "#post/" + old.id : "#board/" + board }, "취소"),
         h("button", { class: "btn primary", onclick: async e => {
           if (!title.value.trim()) return toast("제목을 적어 주세요");
           e.target.disabled = true;
-          const { data, error } = await sb.from("posts").insert({ board: sel.value, title: title.value.trim(), body: body.value.trim() }).select("id").single();
+          const row = { board: sel.value, title: title.value.trim(), body: body.value.trim() };
+          const { data, error } = old
+            ? await sb.from("posts").update(row).eq("id", old.id).select("id").single()
+            : await sb.from("posts").insert(row).select("id").single();
           e.target.disabled = false;
           if (error) return fail(error);
-          toast("올렸어요"); sidebar(); go("#post/" + data.id);
-        } }, "등록"))));
+          toast(old ? "고쳤어요" : "올렸어요"); sidebar(); go("#post/" + data.id);
+        } }, old ? "수정 완료" : "등록"))));
     title.focus();
   }
 
@@ -123,6 +130,12 @@ const Cafe = (() => {
     if (kind === "board" && NAME[arg]) return list(arg);
     if (kind === "post" && /^\d+$/.test(arg)) return post(+arg);
     if (kind === "write") return write(arg);
+    if (kind === "edit" && /^\d+$/.test(arg)) {
+      const { data, error } = await sb.from("posts").select("id,board,title,body,author").eq("id", +arg).maybeSingle();
+      if (error) return fail(error);
+      if (!data || (data.author !== user.id && !isStaff)) return go("#post/" + arg);
+      return write(null, data);
+    }
     if (kind === "search" && arg) return list(null, decodeURIComponent(arg));
     if (kind === "news") { content.replaceChildren(h("div", { class: "list-head" }, h("h2", {}, "기아 뉴스"))); const box = h("div"); content.append(box); return NH.news(box); }
     if (kind === "me") return me();
