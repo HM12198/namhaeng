@@ -14,7 +14,7 @@ create table if not exists public.profiles (
 
 create table if not exists public.posts (
   id bigint generated always as identity primary key,
-  board text not null check (board in ('notice','meetup','free','staff')),
+  board text not null check (board in ('notice','meetup','watch','drink','bungae','free','staff')),
   title text not null check (char_length(title) between 1 and 80),
   body text not null default '' check (char_length(body) <= 5000),
   author uuid not null default auth.uid() references public.profiles(id) on delete cascade,
