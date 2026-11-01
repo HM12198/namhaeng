@@ -24,9 +24,13 @@ TV = {"SPO-T": "SPOTV", "SPO-2T": "SPOTV2", "SS-T": "SBS Sports", "KN-T": "KBS N
       "M-T": "MBC", "S-T": "SBS", "K-1T": "KBS1", "K-2T": "KBS2", "K-T": "KBS", "T-T": "티빙"}
 
 
-def fetch(year, month):
-    data = urllib.parse.urlencode({"leId": "1", "srIdList": "0,9,6", "seasonId": str(year),
-                                   "gameMonth": f"{month:02d}", "teamId": "HT"}).encode()
+# 포스트시즌은 시리즈마다 따로 묻는다 (KBO 시리즈 번호)
+SERIES = [("4", "와일드카드"), ("3", "준플레이오프"), ("5", "플레이오프"), ("7", "한국시리즈")]
+
+
+def fetch(year, month, sr="0,9,6", team="HT"):
+    data = urllib.parse.urlencode({"leId": "1", "srIdList": sr, "seasonId": str(year),
+                                   "gameMonth": f"{month:02d}", "teamId": team}).encode()
     req = urllib.request.Request(URL, data=data, headers={
         "User-Agent": "Mozilla/5.0 (namhaeng-schedule/1.0)",
         "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
@@ -40,9 +44,9 @@ def text(s):
     return html.unescape(re.sub(r"<[^>]+>", " ", s or "")).split()
 
 
-def parse(year, blob):
-    """KBO 표 한 줄 = [날짜(첫 경기만), 시간, 경기, 게임센터, 하이라이트, TV, 라디오, 구장, 비고]"""
-    games, day = [], None
+def rows(year, blob):
+    """KBO 표 한 줄 = [날짜(그날 첫 경기만), 시간, 경기, 게임센터, 하이라이트, TV, 라디오, 구장, 비고]"""
+    out, day = [], None
     for r in blob.get("rows") or []:
         cells = r.get("row") or []
         by = {c.get("Class"): c.get("Text", "") for c in cells if c.get("Class")}
@@ -53,49 +57,76 @@ def parse(year, blob):
             continue
         play = re.sub(r"<em>.*?</em>", " vs ", by["play"], flags=re.S)
         teams = [t for t in text(play) if t != "vs"]
-        if len(teams) != 2 or "KIA" not in teams:
+        if len(teams) != 2:
             continue
-        away, home = teams
         scores = re.findall(r'<span class="(?:win|lose|same)">(\d+)</span>', by["play"])
         rest = [c.get("Text", "") for c in cells if not c.get("Class")]
-        tv = ", ".join(TV.get(t, t) for t in text(rest[-4])) if len(rest) >= 4 else ""   # 끝에서부터 TV, 라디오, 구장, 비고
-        park = " ".join(text(rest[-2])) if len(rest) >= 2 else ""
         note = " ".join(text(rest[-1])) if rest else ""
-        g = {"game_date": day, "game_time": " ".join(text(by.get("time", ""))) or None,
-             "opp": TEAMS.get(away if home == "KIA" else home, away if home == "KIA" else home),
-             "home": home == "KIA", "park": PARKS.get(park, park), "tv": tv[:30],
-             "result": "", "score": "", "note": note[:60] if note != "-" else ""}
-        if len(scores) == 2:
-            a, h = int(scores[0]), int(scores[1])
-            kia, opp = (h, a) if g["home"] else (a, h)
-            g["score"] = f"{kia}:{opp}"
-            g["result"] = "승" if kia > opp else "패" if kia < opp else "무"
-        if "취소" in note:
-            g["result"] = "취소"
-        games.append(g)
-    return games
+        park = " ".join(text(rest[-2])) if len(rest) >= 2 else ""
+        out.append({"date": day, "time": " ".join(text(by.get("time", ""))) or None,
+                    "away": teams[0], "home": teams[1],
+                    "scores": [int(x) for x in scores] if len(scores) == 2 else None,
+                    "tv": ", ".join(TV.get(t, t) for t in text(rest[-4]))[:30] if len(rest) >= 4 else "",
+                    "park": PARKS.get(park, park), "note": "" if note == "-" else note[:60]})
+    return out
+
+
+def kia(r, series=""):
+    """기아 경기 한 줄 → 캘린더 형식 (점수는 기아:상대)"""
+    home = r["home"] == "KIA"
+    opp = r["away"] if home else r["home"]
+    g = {"game_date": r["date"], "game_time": r["time"], "opp": TEAMS.get(opp, opp), "home": home,
+         "park": r["park"], "tv": r["tv"], "result": "", "score": "", "note": r["note"], "series": series}
+    if r["scores"]:
+        a, h = r["scores"]
+        k, o = (h, a) if home else (a, h)
+        g["score"], g["result"] = f"{k}:{o}", "승" if k > o else "패" if k < o else "무"
+    if "취소" in r["note"]:
+        g["result"] = "취소"
+    return g
+
+
+def post(r, series):
+    """포스트시즌 다른 팀 경기 (점수는 원정:홈)"""
+    return {"game_date": r["date"], "game_time": r["time"], "series": series, "away": r["away"], "home": r["home"],
+            "park": r["park"], "tv": r["tv"], "score": f"{r['scores'][0]}:{r['scores'][1]}" if r["scores"] else "",
+            "note": r["note"]}
 
 
 def main():
     out = sys.argv[1] if len(sys.argv) > 1 else "schedule.json"
     now = datetime.now(KST)
     years = [now.year] + ([now.year + 1] if now.month >= 10 else [])
-    games, ok = [], 0
+    games, ps, ok = [], [], 0
     for y in years:
         for m in range(3, 12):
             try:
-                games += parse(y, fetch(y, m))
+                games += [kia(r) for r in rows(y, fetch(y, m)) if "KIA" in (r["away"], r["home"])]
                 ok += 1
             except Exception as e:  # 한 달 실패해도 나머지는 계속
                 print(f"{y}-{m:02d} 실패: {e}", file=sys.stderr)
-            time.sleep(0.5)
+            time.sleep(0.4)
+        for sr, name in SERIES:  # 가을야구는 모든 팀 경기
+            for m in (9, 10, 11):
+                try:
+                    for r in rows(y, fetch(y, m, sr, "")):
+                        if "KIA" in (r["away"], r["home"]):
+                            games.append(kia(r, name))
+                        else:
+                            ps.append(post(r, name))
+                except Exception as e:
+                    print(f"{y}-{m:02d} {name} 실패: {e}", file=sys.stderr)
+                time.sleep(0.4)
     if not ok:
         sys.exit("KBO 일정을 하나도 못 가져왔어요. 기존 schedule.json 을 그대로 둡니다.")
     games.sort(key=lambda g: (g["game_date"], g["game_time"] or ""))
+    ps.sort(key=lambda g: (g["game_date"], g["game_time"] or ""))
     with open(out, "w", encoding="utf-8") as f:
-        json.dump({"updated": now.isoformat(timespec="seconds"), "source": "KBO", "games": games},
+        json.dump({"updated": now.isoformat(timespec="seconds"), "source": "KBO", "games": games, "postseason": ps},
                   f, ensure_ascii=False, indent=1)
-    print(f"{len(games)}경기 저장 ({ok}개월 성공)")
+    print(f"기아 {len(games)}경기, 가을야구(타팀) {len(ps)}경기 저장 ({ok}개월 성공)")
+    for g in ps[:4] + ps[-2:]:
+        print(g)
     for g in games[:3] + games[-3:]:
         print(g)
 
