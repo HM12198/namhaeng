@@ -16,10 +16,11 @@ const Cafe = (() => {
   const authorName = p => p.profiles?.nickname || p.profiles?.kakao_name || "알 수 없음";
 
   async function sidebar() {
-    const [{ count: members }, { data: owner }, { count: posts }] = await Promise.all([
+    const [{ count: members }, { data: owner }, { count: posts }, { data: links }] = await Promise.all([
       sb.from("profiles").select("id", { count: "exact", head: true }).in("role", ["member", "staff", "owner"]),
       sb.from("profiles").select("nickname,kakao_name,created_at").eq("role", "owner").limit(1),
-      sb.from("posts").select("id", { count: "exact", head: true }).neq("board", "staff")
+      sb.from("posts").select("id", { count: "exact", head: true }).neq("board", "staff"),
+      sb.from("cafe_links").select("title,url,note").order("sort")
     ]);
     const o = owner?.[0];
     const q = h("input", { placeholder: "글 제목 검색", maxlength: 30, "aria-label": "글 제목 검색",
@@ -40,6 +41,9 @@ const Cafe = (() => {
       h("nav", { class: "menu", "aria-label": "게시판" },
         link("#all", "전체글보기", String(posts ?? "")),
         MENU.map(([group, items]) => [h("div", { class: "group" }, group), items.map(([k, label]) => link(k === "news" ? "#news" : "#board/" + k, label))]),
+        // 맛집지도 같은 바깥 링크: 참여코드가 있어 코드 대신 회원만 읽는 cafe_links 표에 둔다
+        links?.length ? [h("div", { class: "group" }, "함께 하기"),
+          links.filter(l => /^https:\/\//.test(l.url)).map(l => h("a", { class: "ext", href: l.url, target: "_blank", rel: "noopener noreferrer", title: l.note }, l.title))] : null,
         h("div", { class: "group" }, "나의 활동"), link("#me", "내 정보")));
     mark();
   }

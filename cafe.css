@@ -67,3 +67,5 @@ table.posts{width:100%;border-collapse:collapse;font-size:14px;table-layout:fixe
   .banner-in{padding:20px 16px 18px}
 }
 header .wrap{max-width:1040px}
+.menu a.ext::after{content:"↗";margin-left:auto;color:var(--muted);font-size:12px}
+.menu a.ext::before{content:"◎"}
