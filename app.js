@@ -132,6 +132,20 @@ const NH = (() => {
     }
   }
 
+  // 기아 기사: Actions가 3시간마다 모아 두는 news.json (제목·언론사·링크만)
+  async function news() {
+    const box = h("div", { style: "display:grid;gap:10px" });
+    $("main").replaceChildren(box);
+    let data;
+    try { data = await (await fetch("news.json?" + Date.now())).json(); } catch { data = { items: [] }; }
+    box.append(h("p", { class: "hint" }, data.updated ? `기사 제목을 누르면 원문으로 가요 · ${when(data.updated)} 업데이트` : "기사를 모으는 중이에요. 잠시 뒤 다시 와 주세요."));
+    for (const a of data.items) {
+      if (!/^https:\/\//.test(a.link)) continue;
+      box.append(h("a", { class: "card news", href: a.link, target: "_blank", rel: "noopener noreferrer" },
+        h("b", {}, a.title), h("span", { class: "meta" }, `${a.source || "언론사"} · ${when(a.time)}`)));
+    }
+  }
+
   // 공통 시작: 로그인 확인 → 역할 확인 → 통과하면 onReady(user)
   async function start(title, allowed, onReady) {
     header(title, null);
@@ -147,5 +161,5 @@ const NH = (() => {
     onReady(user);
   }
 
-  return { sb, h, $, toast, fail, when, roleTag, ROLE_KO, BOARD_KO, start, tabs, board, nicknameForm };
+  return { sb, h, $, toast, fail, when, roleTag, ROLE_KO, BOARD_KO, start, tabs, board, news, nicknameForm };
 })();

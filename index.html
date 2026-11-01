@@ -19,13 +19,14 @@
 <script>
 NH.start("회원 사이트", ["member", "staff", "owner"], user => {
   const staffLink = ["staff", "owner"].includes(user.role);
-  NH.tabs([["notice", "공지"], ["meetup", "직관 모임"], ["free", "자유"], ["me", "내 정보"]], key => {
+  NH.tabs([["notice", "공지"], ["news", "뉴스"], ["meetup", "직관 모임"], ["free", "자유"], ["me", "내 정보"]], key => {
     if (key === "me") {
       const { h } = NH;
       return NH.$("main").replaceChildren(h("section", { class: "card" },
         h("h3", {}, "닉네임"), h("p", { class: "hint" }, "단톡방 닉네임과 똑같이 맞춰 주세요."), NH.nicknameForm(user),
         staffLink ? h("a", { href: "staff/" }, "운영진 방으로 가기") : null));
     }
+    if (key === "news") return NH.news();
     NH.board(key, user, { canWrite: key !== "notice" || staffLink });
   });
 });
