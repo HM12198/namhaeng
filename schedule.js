@@ -146,7 +146,9 @@ const Sched = (() => {
     // 이번 달에 경기가 없으면 다음 경기가 있는 달을 먼저 보여 준다
     const now = new Date(), thisMonth = today.slice(0, 7);
     const next = games.find(g => g.game_date >= today);
-    month = !games.some(g => g.game_date.startsWith(thisMonth)) && next ? new Date(next.game_date.slice(0, 7) + "-01T00:00:00") : new Date(now.getFullYear(), now.getMonth(), 1);
+    const last = games[games.length - 1];
+    const pick = games.some(g => g.game_date.startsWith(thisMonth)) ? null : next || last;  // 비시즌엔 다음 경기, 없으면 마지막 경기 달
+    month = pick ? new Date(pick.game_date.slice(0, 7) + "-01T00:00:00") : new Date(now.getFullYear(), now.getMonth(), 1);
     picked = null;
     calBox = h("div", { class: "cal" }); dayBox = h("div", { class: "cal-day" });
     draw();

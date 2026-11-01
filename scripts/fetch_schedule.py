@@ -20,6 +20,9 @@ PARKS = {"광주": "광주-기아 챔피언스 필드", "잠실": "잠실야구�
          "수원": "수원 KT 위즈파크", "창원": "창원 NC 파크", "대구": "대구 삼성 라이온즈 파크", "사직": "사직야구장",
          "대전": "대전 한화생명 볼파크"}
 
+TV = {"SPO-T": "SPOTV", "SPO-2T": "SPOTV2", "SS-T": "SBS Sports", "KN-T": "KBS N", "MS-T": "MBC SPORTS+",
+      "M-T": "MBC", "S-T": "SBS", "K-1T": "KBS1", "K-2T": "KBS2", "K-T": "KBS", "T-T": "티빙"}
+
 
 def fetch(year, month):
     data = urllib.parse.urlencode({"leId": "1", "srIdList": "0,9,6", "seasonId": str(year),
@@ -55,7 +58,7 @@ def parse(year, blob):
         away, home = teams
         scores = re.findall(r'<span class="(?:win|lose|same)">(\d+)</span>', by["play"])
         rest = [c.get("Text", "") for c in cells if not c.get("Class")]
-        tv = " ".join(text(rest[-4])) if len(rest) >= 4 else ""   # 끝에서부터 TV, 라디오, 구장, 비고
+        tv = ", ".join(TV.get(t, t) for t in text(rest[-4])) if len(rest) >= 4 else ""   # 끝에서부터 TV, 라디오, 구장, 비고
         park = " ".join(text(rest[-2])) if len(rest) >= 2 else ""
         note = " ".join(text(rest[-1])) if rest else ""
         g = {"game_date": day, "game_time": " ".join(text(by.get("time", ""))) or None,
