@@ -105,7 +105,7 @@ drop policy if exists "posts edit" on public.posts;
 create policy "posts edit" on public.posts for update to authenticated using (
   (author = (select auth.uid()) and public.my_role() in ('member','staff','owner')) or public.my_role() in ('staff','owner')
 ) with check (
-  public.my_role() in ('staff','owner') or (board in ('meetup','free') and pinned = false)
+  public.my_role() in ('staff','owner') or (board in ('meetup','watch','drink','bungae','free') and pinned = false)
 );
 drop policy if exists "posts delete" on public.posts;
 create policy "posts delete" on public.posts for delete to authenticated using (
@@ -118,3 +118,31 @@ create policy "posts delete" on public.posts for delete to authenticated using (
 -- alter table public.profiles disable trigger guard_profile;
 -- update public.profiles set role = 'owner' where kakao_name = '...';
 -- alter table public.profiles enable trigger guard_profile;
+
+-- 모임 양식 값 (직관·티관·술자리·번개): 날짜, 시간, 장소, 인원, 모집 상태 등
+alter table public.posts add column if not exists meta jsonb not null default '{}'::jsonb
+  check (jsonb_typeof(meta) = 'object' and pg_column_size(meta) <= 4000);
+
+-- 왼쪽 메뉴 "함께 하기" 바깥 링크 (참여코드가 들어 있어 회원만 읽는다)
+-- (실제 표 정의는 Supabase 마이그레이션 namhaeng_cafe_links 참고)
+
+-- 기아 경기 일정 (캘린더·오늘의 매치데이). 회원은 읽기, 운영진이 넣고 고친다.
+create table if not exists public.games (
+  id bigint generated always as identity primary key,
+  game_date date not null,
+  game_time time,
+  opp text not null check (char_length(opp) between 1 and 20),
+  park text not null default '' check (char_length(park) <= 30),
+  home boolean not null default true,
+  tv text not null default '' check (char_length(tv) <= 30),
+  result text not null default '' check (result in ('', '승', '패', '무', '취소')),
+  score text not null default '' check (char_length(score) <= 15),
+  note text not null default '' check (char_length(note) <= 60),
+  created_at timestamptz not null default now()
+);
+create index if not exists games_date on public.games (game_date);
+alter table public.games enable row level security;
+create policy "games read" on public.games for select to authenticated using (public.my_role() in ('member','staff','owner'));
+create policy "games write" on public.games for all to authenticated
+  using (public.my_role() in ('staff','owner')) with check (public.my_role() in ('staff','owner'));
+grant select, insert, update, delete on public.games to authenticated;
