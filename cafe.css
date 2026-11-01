@@ -1,0 +1,69 @@
+/* 네이버 카페식 배치: 배너 + 왼쪽 카페 정보·메뉴 + 오른쪽 목록 */
+.banner{position:relative;overflow:hidden;background:var(--board);color:var(--board-ink);border-top:1px solid #ffffff14}
+.banner .stripes i{position:absolute;height:22px;background:#d3172f;clip-path:polygon(0 0,100% 45%,100% 60%,0 100%);opacity:.9}
+.banner .stripes i.r{clip-path:polygon(100% 0,0 45%,0 60%,100% 100%)}
+.banner-in{position:relative;max-width:1040px;margin:0 auto;padding:30px 16px 28px;display:grid;justify-items:center;gap:2px;text-align:center}
+.banner .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.24em;color:var(--gold)}
+.banner .name{font-family:var(--f-display);font-size:clamp(40px,9vw,64px);line-height:1.05;color:#ff5a6e}
+.banner .sub{font-size:13px;opacity:.8}
+
+main .wrap:has(.cafe){max-width:1040px}
+.cafe{display:grid;grid-template-columns:220px minmax(0,1fr);gap:20px;align-items:start}
+.side{display:grid;gap:10px;position:sticky;top:12px;min-width:0}
+.cafe-info{background:var(--surface);border:1px solid var(--line);border-top:2px solid var(--ink);padding:14px;display:grid;gap:10px}
+.cafe-info .row{display:flex;gap:10px;align-items:center}
+.cafe-info img{border-radius:8px;flex:0 0 auto}
+.cafe-info b{font-size:14px;margin-right:4px}
+.facts{list-style:none;margin:0;padding:10px 0 0;border-top:1px solid var(--line);display:grid;gap:4px;font-size:13px;color:var(--muted)}
+.facts b{color:var(--ink)}
+.btn.block{display:block;width:100%;text-align:center;text-decoration:none}
+a.btn{text-decoration:none;display:inline-block}
+.search{display:flex;gap:6px}
+.search input{padding:7px 10px;font-size:13px}
+.menu{background:var(--surface);border:1px solid var(--line);display:grid;padding:6px 0}
+.menu a{display:flex;justify-content:space-between;padding:6px 14px;color:var(--ink);text-decoration:none;font-size:14px}
+.menu a::before{content:"▤";color:var(--muted);font-size:11px;margin-right:6px;align-self:center}
+.menu a{justify-content:flex-start}
+.menu a .cnt{margin-left:auto;color:var(--muted);font-size:12px}
+.menu a:hover{background:var(--bg)}
+.menu a.on{color:var(--accent);font-weight:700}
+.menu .group{font-weight:700;font-size:13px;padding:10px 14px 4px;border-top:1px solid var(--line);margin-top:6px}
+.menu .group:first-of-type{margin-top:8px}
+
+.content{background:var(--surface);border:1px solid var(--line);padding:22px 24px;min-height:420px;min-width:0}
+.list-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding-bottom:12px;border-bottom:2px solid var(--ink)}
+.list-head h2,.content h2{margin:0;font-size:20px}
+table.posts{width:100%;border-collapse:collapse;font-size:14px;table-layout:fixed}
+.posts th{font-weight:500;color:var(--muted);font-size:13px;padding:10px 6px;border-bottom:1px solid var(--line);text-align:center}
+.posts th:first-child{text-align:left}
+.posts td{padding:11px 6px;border-bottom:1px solid var(--line);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.posts .a{width:130px;text-align:center;color:var(--muted)}
+.posts .d{width:80px;text-align:center;color:var(--muted);font-size:13px}
+.posts td.t a{color:var(--ink);text-decoration:none}
+.posts td.t a:hover{text-decoration:underline}
+.posts tr.pinned{background:var(--accent-soft)}
+.posts .pin{color:var(--accent);font-weight:700;margin-right:6px}
+.posts .bd{color:var(--muted);font-size:12px;margin-right:6px}
+.empty{color:var(--muted);text-align:center;padding:60px 0}
+.post .crumb{color:var(--ok);text-decoration:none;font-size:13px}
+.post h2{font-size:24px;margin:6px 0 10px}
+.post .by{display:flex;gap:10px;align-items:baseline;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.post .body{white-space:pre-wrap;padding:22px 0 30px;min-height:160px;line-height:1.75}
+.row.end{justify-content:flex-end;border-top:1px solid var(--line);padding-top:12px}
+.editor{display:grid;gap:10px}
+.editor select{width:auto;min-width:160px}
+
+@media (max-width:760px){
+  .cafe{grid-template-columns:1fr;gap:12px}
+  .side{position:static}
+  .cafe-info .facts{display:none}
+  .menu{display:flex;overflow-x:auto;padding:0;white-space:nowrap}
+  .menu .group{display:none}
+  .menu a{padding:10px 12px}
+  .menu a::before{display:none}
+  .content{padding:16px 14px}
+  .posts .a{width:84px;font-size:12px}
+  .posts .d{width:70px;font-size:12px}
+  .banner-in{padding:20px 16px 18px}
+}
+header .wrap{max-width:1040px}

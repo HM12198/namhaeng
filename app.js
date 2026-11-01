@@ -14,7 +14,7 @@ const NH = (() => {
       else if (k.startsWith("on")) el.addEventListener(k.slice(2), v);
       else if (v !== false && v != null) el.setAttribute(k, v === true ? "" : v);
     }
-    for (const kid of kids.flat()) if (kid != null && kid !== false) el.append(kid instanceof Node ? kid : String(kid));
+    for (const kid of kids.flat(Infinity)) if (kid != null && kid !== false) el.append(kid instanceof Node ? kid : String(kid));
     return el;
   }
   const $ = id => document.getElementById(id);
@@ -133,9 +133,9 @@ const NH = (() => {
   }
 
   // 기아 기사: Actions가 3시간마다 모아 두는 news.json (제목·언론사·링크만)
-  async function news() {
+  async function news(target = $("main")) {
     const box = h("div", { style: "display:grid;gap:10px" });
-    $("main").replaceChildren(box);
+    target.replaceChildren(box);
     let data;
     try { data = await (await fetch("news.json?" + Date.now())).json(); } catch { data = { items: [] }; }
     box.append(h("p", { class: "hint" }, data.updated ? `기사 제목을 누르면 원문으로 가요 · ${when(data.updated)} 업데이트` : "기사를 모으는 중이에요. 잠시 뒤 다시 와 주세요."));

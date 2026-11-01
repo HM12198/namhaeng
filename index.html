@@ -3,33 +3,28 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>남행열차 회원 사이트</title>
+<title>남행열차 회원 카페</title>
 <meta name="robots" content="noindex">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=IBM+Plex+Sans+KR:wght@400;500;700&display=swap">
+<link rel="icon" href="assets/app-icon-tigers.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@500&display=swap">
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="cafe.css">
 </head>
 <body>
 <header><div class="wrap"><h1 id="title"></h1><div class="who" id="who"></div></div></header>
+<div class="banner" aria-hidden="true">
+  <div class="stripes"><i style="left:-30px;top:18px;width:170px"></i><i style="left:-30px;top:96px;width:110px"></i><i class="r" style="right:-30px;top:34px;width:150px"></i><i class="r" style="right:-30px;top:120px;width:120px"></i></div>
+  <div class="banner-in"><span class="eyebrow">KIA TIGERS FAN CAFE</span><span class="name">남행열차</span><span class="sub">같이 웃고, 같이 열받고, 같이 우승합시다</span></div>
+</div>
 <nav id="nav" hidden><div class="wrap" role="tablist"></div></nav>
 <main><div class="wrap" id="main"></div></main>
 <div class="toast" id="toast" role="status"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script src="config.js"></script>
 <script src="app.js"></script>
+<script src="cafe.js"></script>
 <script>
-NH.start("회원 사이트", ["member", "staff", "owner"], user => {
-  const staffLink = ["staff", "owner"].includes(user.role);
-  NH.tabs([["notice", "공지"], ["news", "뉴스"], ["meetup", "직관 모임"], ["free", "자유"], ["me", "내 정보"]], key => {
-    if (key === "me") {
-      const { h } = NH;
-      return NH.$("main").replaceChildren(h("section", { class: "card" },
-        h("h3", {}, "닉네임"), h("p", { class: "hint" }, "단톡방 닉네임과 똑같이 맞춰 주세요."), NH.nicknameForm(user),
-        staffLink ? h("a", { href: "staff/" }, "운영진 방으로 가기") : null));
-    }
-    if (key === "news") return NH.news();
-    NH.board(key, user, { canWrite: key !== "notice" || staffLink });
-  });
-});
+NH.start("회원 카페", ["member", "staff", "owner"], Cafe.mount);
 </script>
 </body>
 </html>
