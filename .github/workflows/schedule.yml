@@ -1,0 +1,35 @@
+name: 기아 경기 일정 가져오기
+
+on:
+  schedule:
+    - cron: "47 */3 * * *"   # 3시간마다 (UTC). 경기 결과도 같이 갱신
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: repo-bot
+  cancel-in-progress: false
+
+jobs:
+  schedule:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python scripts/fetch_schedule.py schedule.json
+      - name: 바뀌었으면 커밋
+        run: |
+          git config user.name "namhaeng-schedule-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add schedule.json
+          git diff --cached --quiet && exit 0
+          # updated 시각만 바뀐 거면 커밋하지 않는다
+          if git diff --cached -U0 schedule.json | grep '^[+-] ' | grep -vq '"updated"'; then
+            git commit -m "경기 일정 업데이트"
+            git pull --rebase origin main && git push
+          fi

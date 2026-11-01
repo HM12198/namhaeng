@@ -14,6 +14,18 @@ const Sched = (() => {
   const parkShort = p => (p || "").replace(HOME_PARK, "챔필").replace(/야구장|스카이돔/, "").split(" ").pop();
   const hm = t => (t || "").slice(0, 5);
 
+  // KBO 공식 일정(schedule.json, 봇이 몇 시간마다 갱신) + 운영진이 직접 넣은 경기(games 표)를 합친다.
+  // 같은 날 같은 상대면 운영진이 넣은 쪽이 이긴다.
+  let auto = [];
+  async function loadAuto() {
+    try { const r = await fetch("schedule.json?t=" + Date.now()); auto = r.ok ? (await r.json()).games || [] : []; } catch { auto = []; }
+  }
+  const merge = db => {
+    const key = g => g.game_date + "|" + g.opp;
+    const mine = new Set(db.map(key));
+    return [...db, ...auto.filter(g => !mine.has(key(g))).map(g => ({ ...g, auto: true }))]
+      .sort((a, b) => (a.game_date + (a.game_time || "")).localeCompare(b.game_date + (b.game_time || "")));
+  };
   let games = [], month, staff = false, picked = null, calBox, dayBox;
 
   function matchday(meetCount) {
@@ -29,7 +41,7 @@ const Sched = (() => {
           h("div", { class: "md-info" }, [hm(x.game_time) || "시간 미정", parkShort(x.park) || (x.home ? "챔필" : "원정"), x.tv && "📺 " + x.tv].filter(Boolean).join(" · ")),
           x.result ? h("div", { class: "md-result r-" + x.result }, x.result + (x.score ? " " + x.score : "")) : null,
           x.note ? h("div", { class: "md-note" }, x.note) : null)),
-        h("div", { class: "md-go" }, go("#board/meetup", "⚾ 직관메이트"), go("#board/watch", "📺 티관 모임"), go("#board/drink", "🍻 술자리"),
+        h("div", { class: "md-go" }, go("#board/meetup", "⚾ 직관메이트"), go("#board/watch", "📺 티관 모임"), go("#board/drink", "🍻 술자리·번개"),
           meetCount ? h("span", { class: "md-cnt" }, `오늘 모임 ${meetCount}개`) : null));
     }
     const dday = next ? Math.round((parse(next.game_date) - parse(today)) / 864e5) : 0;
@@ -37,7 +49,7 @@ const Sched = (() => {
       h("span", { class: "eyebrow" }, "TODAY'S MATCHDAY"),
       h("div", { class: "md-off" }, "오늘은 경기가 없는 날이에요"),
       next ? h("div", { class: "md-info" }, `다음 경기 ${gameDay(next.game_date)} ${hm(next.game_time)} vs ${teamShort(next.opp)} · ${parkShort(next.park) || (next.home ? "챔필" : "원정")}`, h("b", { class: "dday" }, " D-" + dday))
-        : h("div", { class: "md-info" }, "아직 올라온 경기 일정이 없어요. 2027 시즌 일정은 KBO 발표 뒤 올라와요."));
+        : h("div", { class: "md-info" }, "아직 올라온 경기 일정이 없어요. 2027 시즌 일정은 KBO가 발표하면 자동으로 올라와요."));
   }
 
   function calendar() {
@@ -72,7 +84,8 @@ const Sched = (() => {
     const list = games.filter(g => g.game_date === picked);
     const row = g => h("li", {}, h("b", {}, `vs ${g.opp}`), " ",
       [hm(g.game_time), g.park, g.tv && "📺 " + g.tv, g.result && g.result + (g.score ? " " + g.score : ""), g.note].filter(Boolean).join(" · "),
-      staff ? [" ", h("button", { class: "btn small", onclick: () => editForm(g) }, "수정"),
+      g.auto ? h("span", { class: "hint" }, " (KBO 자동)") : null,
+      staff && !g.auto ? [" ", h("button", { class: "btn small", onclick: () => editForm(g) }, "수정"),
         h("button", { class: "btn small danger", onclick: async () => {
           if (!confirm("이 경기를 지울까요?")) return;
           const { error } = await sb.from("games").delete().eq("id", g.id);
@@ -116,7 +129,7 @@ const Sched = (() => {
   async function reload() {
     const { data, error } = await sb.from("games").select("*").order("game_date").order("game_time");
     if (error) return fail(error);
-    games = data; draw();
+    games = merge(data); draw();
   }
 
   // 첫 화면 위쪽 조각들을 돌려준다
@@ -124,10 +137,12 @@ const Sched = (() => {
     staff = isStaff;
     const today = ymd(new Date());
     const [{ data, error }, { count }] = await Promise.all([
-      sb.from("games").select("*").order("game_date").order("game_time"),
+      loadAuto().then(() =>
+      sb.from("games").select("*").order("game_date").order("game_time")),
       sb.from("posts").select("id", { count: "exact", head: true }).in("board", meetBoards).eq("meta->>date", today)
     ]);
-    if (error) { console.error(error); games = []; } else games = data;
+    if (error) console.error(error);
+    games = merge(error ? [] : data);
     // 이번 달에 경기가 없으면 다음 경기가 있는 달을 먼저 보여 준다
     const now = new Date(), thisMonth = today.slice(0, 7);
     const next = games.find(g => g.game_date >= today);

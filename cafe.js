@@ -4,7 +4,7 @@ const Cafe = (() => {
   const { sb, h, $, toast, fail, when, roleTag, BOARD_KO } = NH;
   const MENU = [
     ["남행열차", [["notice", "공지사항"]]],
-    ["모임", [["meetup", "⚾ 직관메이트"], ["watch", "📺 티관 모임"], ["drink", "🍻 술자리"], ["bungae", "⚡ 번개·기타"]]],
+    ["모임", [["meetup", "⚾ 직관메이트"], ["watch", "📺 티관 모임"], ["drink", "🍻 술자리·번개"]]],
     ["커뮤니티", [["free", "자유게시판"]]],
     ["타이거즈", [["news", "기아 뉴스"]]]
   ];
@@ -12,14 +12,15 @@ const Cafe = (() => {
   const TIGERS_LINKS = [
     ["갸티비 (공식 유튜브)", "https://www.youtube.com/channel/UCKp8knO8a6tSI1oaLjfd9XA"],
     ["응원가 모음", "https://www.youtube.com/results?search_query=%EA%B8%B0%EC%95%84%ED%83%80%EC%9D%B4%EA%B1%B0%EC%A6%88+%EC%9D%91%EC%9B%90%EA%B0%80"],
+    ["팀스토어 (공식 굿즈)", "https://teamstore.tigers.co.kr/"],
     ["기아 타이거즈 공식 홈", "https://tigers.co.kr"]
   ];
-  const NAME = { notice: "공지사항", meetup: "직관메이트 구하기", watch: "티관 모임", drink: "술자리", bungae: "번개·기타", free: "자유게시판" };
+  const NAME = { notice: "공지사항", meetup: "직관메이트 구하기", watch: "티관 모임", drink: "술자리·번개", bungae: "번개·기타", free: "자유게시판" };
 
   // 모임 양식: 게시판마다 칸이 다르고, 값은 posts.meta 에 저장한다
   const { TEAMS, PARKS, gameDay, teamShort } = Sched;
   const TICKET = ["각자 예매", "제가 같이 예매해요", "양도 구해요"];
-  const MOOD = ["경기 보며 한잔", "경기 끝나고 뒤풀이", "야구 얘기하며 한잔"];
+  const MOOD = ["경기 보며 한잔", "경기 끝나고 뒤풀이", "야구 얘기하며 한잔", "번개 (술 없이도 OK)", "기타"];
   const opt = (list, cur, blank) => [blank ? h("option", { value: "" }, blank) : null, list.map(t => h("option", { value: t, selected: t === cur }, t))];
   const FIELD = {  // 키: [라벨, 입력칸 만들기]
     date: ["📅 날짜", m => h("input", { type: "date", value: m.date || "" })],
@@ -29,12 +30,12 @@ const Cafe = (() => {
     meet_place: ["📍 만날 장소", m => h("input", { maxlength: 40, value: m.meet_place || "", placeholder: "예: 챔필 1루 출입구 앞, 광주송정역 2번 출구" })],
     area: ["🗺️ 지역", m => h("input", { maxlength: 20, value: m.area || "", placeholder: "예: 광주 상무지구, 서울 강남" })],
     place: ["📍 장소", m => h("input", { maxlength: 40, value: m.place || "", placeholder: "예: ○○ 스포츠펍, 정해지면 알려드려요" })],
-    what: ["🎯 뭐 해요", m => h("input", { maxlength: 30, value: m.what || "", placeholder: "예: 굿즈 같이 사러 가요, 캐치볼" })],
+    what: ["🎯 뭐 해요", m => h("input", { maxlength: 30, value: m.what || "", placeholder: "예: 삼겹살에 소주, 굿즈 같이 사러 가요" })],
     people: ["🙋 모집 인원", m => h("input", { type: "number", min: 1, max: 30, value: m.people || 2, inputmode: "numeric" })],
     seat: ["💺 좌석·구역", m => h("input", { maxlength: 40, value: m.seat || "", placeholder: "예: 3루 K9 응원석, 아직 미정" })],
     ticket: ["🎫 티켓", m => h("select", {}, opt(TICKET, m.ticket))],
     after: ["🍻 뒤풀이", m => h("select", {}, opt(["미정", "있어요", "없어요"], m.after))],
-    mood: ["🍺 분위기", m => h("select", {}, opt(MOOD, m.mood))],
+    mood: ["🍺 어떤 모임", m => h("select", {}, opt(MOOD, m.mood))],
     cost: ["💸 회비", m => h("input", { maxlength: 30, value: m.cost || "", placeholder: "예: 1/N, 1인 2만원" })],
     carpool: ["🚗 카풀", m => h("input", { maxlength: 40, value: m.carpool || "", placeholder: "예: 서산 출발 2자리 / 없음" })]
   };
@@ -44,8 +45,9 @@ const Cafe = (() => {
       m => `[${gameDay(m.date)} ${place(m)}] vs ${teamShort(m.opp)} 직관메이트 ${m.people}명 구해요`],
     watch: [["date★경기 날짜", "opp★", "meet_time★", "area★", "place★", "people★", "cost", "after"],
       m => `[${gameDay(m.date)} ${m.area}] vs ${teamShort(m.opp)} 같이 티관해요 (${m.people}명)`],
-    drink: [["date★", "meet_time★", "area★", "place★", "people★", "mood", "cost"],
-      m => `[${gameDay(m.date)} ${m.area}] ${m.mood} ${m.people}명 모여요`],
+    drink: [["date★", "meet_time★", "area★", "mood", "what", "place★", "people★", "cost"],
+      m => `[${gameDay(m.date)} ${m.area}] ${m.what || m.mood} ${m.people}명 모여요`],
+    // 예전 번개 게시판 글 보기용 (메뉴·글쓰기에선 술자리·번개로 합침)
     bungae: [["date★", "meet_time★", "area★", "what★", "place", "people★", "cost"],
       m => `[${gameDay(m.date)} ${m.area}] ${m.what} 번개 ${m.people}명`]
   };
@@ -87,7 +89,7 @@ const Cafe = (() => {
         error ? fail(error) : (toast(meta.status === "closed" ? "모집을 마감했어요" : "다시 모집해요"), reload());
       } }, m.status === "closed" ? "다시 모집하기" : "모집 마감하기") : null);
   }
-  const WRITABLE = [...Object.keys(KINDS), "free"];
+  const WRITABLE = ["meetup", "watch", "drink", "free"];
   let user, isStaff, side, content;
 
   const day = s => new Date(s).toLocaleDateString("ko-KR", { year: "2-digit", month: "2-digit", day: "2-digit" }).replace(/\s/g, "").replace(/\.$/, "");
@@ -181,14 +183,14 @@ const Cafe = (() => {
 
   // 새 글이면 old 없이, 수정이면 old = 기존 글
   function write(board, old) {
-    const boards = [...WRITABLE, ...(isStaff ? ["notice"] : [])];
+    const boards = [...WRITABLE, ...(isStaff ? ["notice"] : []), ...(old?.board === "bungae" ? ["bungae"] : [])];
     if (old) board = old.board;
     if (!boards.includes(board)) board = "free";
     const sel = h("select", { "aria-label": "게시판" }, boards.map(b => h("option", { value: b, selected: b === board }, NAME[b])));
     const title = h("input", { maxlength: 80, placeholder: "제목을 입력해 주세요" });
     const body = h("textarea", { maxlength: 5000, placeholder: "내용을 입력해 주세요", rows: 12 });
     if (old) { title.value = old.title; body.value = old.body || ""; }
-    const forms = Object.fromEntries(Object.keys(KINDS).map(k => [k, meetForm(k, old?.board === k ? old.meta : {})]));
+    const forms = Object.fromEntries(Object.keys(KINDS).filter(k => boards.includes(k)).map(k => [k, meetForm(k, old?.board === k ? old.meta : {})]));
     const sync = () => {
       const on = !!forms[sel.value];
       Object.entries(forms).forEach(([k, f]) => { f.hidden = k !== sel.value; });
