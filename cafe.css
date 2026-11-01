@@ -137,8 +137,8 @@ header .wrap{max-width:1040px}
 }
 /* 사진 배너 (방장이 준 이미지). 글씨가 가운데 위쪽에 있어서 좁은 화면에선 가운데를 기준으로 잘라 보여 준다 */
 .banner.photo{background:#0d0e13;border-top:0;line-height:0}
-.banner.photo img{display:block;width:100%;height:auto;max-height:420px;object-fit:cover;object-position:center top}
-@media (max-width:760px){.banner.photo img{height:170px;object-fit:cover;object-position:center top}}
+/* 잘리지 않게 그림 비율 그대로. 아주 넓은 화면에선 1920px까지만 키우고 양옆은 배너 색 */
+.banner.photo img{display:block;width:100%;max-width:1920px;height:auto;margin:0 auto}
 /* 가을야구 */
 .chip.ps{background:#c98a1c;color:#fff}
 .chip .sr{font-weight:700;margin-right:2px}
