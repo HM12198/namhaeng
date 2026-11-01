@@ -139,3 +139,11 @@ header .wrap{max-width:1040px}
 .banner.photo{background:#0d0e13;border-top:0;line-height:0}
 .banner.photo img{display:block;width:100%;height:auto;max-height:420px;object-fit:cover;object-position:center top}
 @media (max-width:760px){.banner.photo img{height:170px;object-fit:cover;object-position:center top}}
+/* 가을야구 */
+.chip.ps{background:#c98a1c;color:#fff}
+.chip .sr{font-weight:700;margin-right:2px}
+.md-sr{font-size:12px;font-weight:700;color:var(--gold)}
+.md-game.ps .md-vs{font-size:24px}
+.md-game.ps .md-vs b:first-child{color:var(--board-ink)}
+.day-games li.ps b{color:#c98a1c}
+@media (max-width:760px){.chip .sr{display:none}.matchday::after{display:none}}

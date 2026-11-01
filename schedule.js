@@ -16,10 +16,15 @@ const Sched = (() => {
 
   // KBO 공식 일정(schedule.json, 봇이 몇 시간마다 갱신) + 운영진이 직접 넣은 경기(games 표)를 합친다.
   // 같은 날 같은 상대면 운영진이 넣은 쪽이 이긴다.
-  let auto = [];
+  let auto = [], ps = [];  // ps = 포스트시즌 다른 팀 경기 (기아 경기는 auto 에 series 가 붙어 있다)
+  const SR = { "와일드카드": "WC", "준플레이오프": "준PO", "플레이오프": "PO", "한국시리즈": "KS" };
   async function loadAuto() {
-    try { const r = await fetch("schedule.json?t=" + Date.now()); auto = r.ok ? (await r.json()).games || [] : []; } catch { auto = []; }
+    try {
+      const r = await fetch("schedule.json?t=" + Date.now()), j = r.ok ? await r.json() : {};
+      auto = j.games || []; ps = j.postseason || [];
+    } catch { auto = []; ps = []; }
   }
+  const psOn = d => ps.filter(x => x.game_date === d);
   const merge = db => {
     const key = g => g.game_date + "|" + g.opp;
     const mine = new Set(db.map(key));
@@ -30,17 +35,22 @@ const Sched = (() => {
 
   function matchday(meetCount) {
     const today = ymd(new Date());
-    const g = games.filter(x => x.game_date === today);
+    const g = games.filter(x => x.game_date === today), other = psOn(today);
     const next = games.find(x => x.game_date > today);
     const go = (href, label) => h("a", { class: "btn small", href }, label);
-    if (g.length) {
+    if (g.length || other.length) {
       return h("section", { class: "matchday" },
-        h("span", { class: "eyebrow" }, "TODAY'S MATCHDAY · " + gameDay(today)),
+        h("span", { class: "eyebrow" }, (g.length ? "TODAY'S MATCHDAY · " : "오늘의 가을야구 · ") + gameDay(today)),
         g.map(x => h("div", { class: "md-game" },
+          x.series ? h("span", { class: "md-sr" }, "🍂 " + x.series) : null,
           h("div", { class: "md-vs" }, h("b", {}, "KIA"), h("span", {}, "vs"), h("b", {}, teamShort(x.opp))),
           h("div", { class: "md-info" }, [hm(x.game_time) || "시간 미정", parkShort(x.park) || (x.home ? "챔필" : "원정"), x.tv && "📺 " + x.tv].filter(Boolean).join(" · ")),
           x.result ? h("div", { class: "md-result r-" + x.result }, x.result + (x.score ? " " + x.score : "")) : null,
           x.note ? h("div", { class: "md-note" }, x.note) : null)),
+        other.map(x => h("div", { class: "md-game ps" },
+          h("span", { class: "md-sr" }, "🍂 " + x.series),
+          h("div", { class: "md-vs" }, h("b", {}, x.away), h("span", {}, x.score ? x.score : "vs"), h("b", {}, x.home)),
+          h("div", { class: "md-info" }, [hm(x.game_time), parkShort(x.park), x.tv && "📺 " + x.tv, x.note].filter(Boolean).join(" · ")))),
         h("div", { class: "md-go" }, go("#board/meetup", "⚾ 직관메이트"), go("#board/watch", "📺 티관 모임"), go("#board/drink", "🍻 술자리·번개"),
           meetCount ? h("span", { class: "md-cnt" }, `오늘 모임 ${meetCount}개`) : null));
     }
@@ -66,7 +76,9 @@ const Sched = (() => {
         "aria-label": `${m + 1}월 ${d}일` + (list.length ? " 경기 있음" : ""), onclick: () => { picked = key; draw(); } },
         h("span", { class: "cal-d" }, d),
         list.map(g => h("span", { class: "chip " + (g.home ? "home" : "away") + (g.result ? " r-" + g.result : "") },
-          h("i", {}, "vs "), teamShort(g.opp), g.result ? h("em", {}, g.result) : h("small", {}, hm(g.game_time))))));
+          g.series ? h("b", { class: "sr" }, SR[g.series] || g.series) : null,
+          h("i", {}, "vs "), teamShort(g.opp), g.result ? h("em", {}, g.result) : h("small", {}, hm(g.game_time)))),
+        psOn(key).map(g => h("span", { class: "chip ps" }, SR[g.series] || g.series, h("i", {}, ` ${g.away}-${g.home}`)))));
     }
     const shift = n => { month = new Date(y, m + n, 1); picked = null; draw(); };
     return [
@@ -74,7 +86,7 @@ const Sched = (() => {
         h("button", { class: "btn small", onclick: () => shift(-1), "aria-label": "이전 달" }, "‹"),
         h("h3", {}, `${y}년 ${m + 1}월 경기 일정`),
         h("button", { class: "btn small", onclick: () => shift(1), "aria-label": "다음 달" }, "›")),
-      h("div", { class: "cal-legend" }, h("span", { class: "chip home" }, "홈"), h("span", { class: "chip away" }, "원정"),
+      h("div", { class: "cal-legend" }, h("span", { class: "chip home" }, "홈"), h("span", { class: "chip away" }, "원정"), h("span", { class: "chip ps" }, "가을야구"),
         staff ? h("span", { class: "hint" }, "날짜를 누르면 경기를 넣고 고칠 수 있어요") : null),
       h("div", { class: "cal-grid" }, [...WEEK].map((w, i) => h("div", { class: "cal-w" + (i === 0 ? " sun" : i === 6 ? " sat" : "") }, w)), cells)];
   }
@@ -82,7 +94,7 @@ const Sched = (() => {
   function dayPanel() {
     if (!picked) return [];
     const list = games.filter(g => g.game_date === picked);
-    const row = g => h("li", {}, h("b", {}, `vs ${g.opp}`), " ",
+    const row = g => h("li", {}, h("b", {}, (g.series ? `[${g.series}] ` : "") + `vs ${g.opp}`), " ",
       [hm(g.game_time), g.park, g.tv && "📺 " + g.tv, g.result && g.result + (g.score ? " " + g.score : ""), g.note].filter(Boolean).join(" · "),
       g.auto ? h("span", { class: "hint" }, " (KBO 자동)") : null,
       staff && !g.auto ? [" ", h("button", { class: "btn small", onclick: () => editForm(g) }, "수정"),
@@ -91,8 +103,10 @@ const Sched = (() => {
           const { error } = await sb.from("games").delete().eq("id", g.id);
           error ? fail(error) : (toast("지웠어요"), reload());
         } }, "삭제")] : null);
+    const other = psOn(picked).map(g => h("li", { class: "ps" }, h("b", {}, `[${g.series}] ${g.away} vs ${g.home}`), " ",
+      [hm(g.game_time), g.park, g.tv && "📺 " + g.tv, g.score, g.note].filter(Boolean).join(" · ")));
     return [h("h4", {}, gameDay(picked)),
-      list.length ? h("ul", { class: "day-games" }, list.map(row)) : h("p", { class: "hint" }, "이날은 기아 경기가 없어요."),
+      list.length || other.length ? h("ul", { class: "day-games" }, list.map(row), other) : h("p", { class: "hint" }, "이날은 기아 경기가 없어요."),
       staff ? h("button", { class: "btn small primary", onclick: () => editForm() }, "+ 이날 경기 넣기") : null];
   }
 
