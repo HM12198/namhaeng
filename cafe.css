@@ -166,3 +166,23 @@ button.x:hover{color:var(--accent)}
 .cm-by .x{margin-left:auto}
 .cm-body{white-space:pre-wrap;margin-top:4px;font-size:14px;line-height:1.6}
 .cm-write{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end}
+/* 갤러리 */
+.gallery-form .row{display:flex;justify-content:space-between;align-items:end;gap:10px}
+.pick-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px}
+.pick-grid figure{margin:0;position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;background:var(--line)}
+.pick-grid img{width:100%;height:100%;object-fit:cover;display:block}
+.pick-grid .x{position:absolute;top:4px;right:4px;background:#000a;color:#fff;border-radius:99px;width:24px;height:24px}
+.pick-add{aspect-ratio:1;border:2px dashed var(--line);border-radius:8px;background:var(--surface);color:var(--muted);font:inherit;font-weight:700;cursor:pointer}
+.pick-add:hover{border-color:var(--accent);color:var(--accent)}
+.gal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:16px 12px;padding-top:14px}
+.gal-card{color:var(--ink);text-decoration:none;display:grid;gap:4px;min-width:0}
+.gal-thumb{position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;background:var(--line);display:grid;place-items:center;font-size:30px}
+.gal-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .2s}
+.gal-card:hover img{transform:scale(1.04)}
+.gal-n{position:absolute;right:6px;bottom:6px;background:#000b;color:#fff;font-size:12px;font-weight:700;border-radius:99px;padding:1px 7px}
+.gal-tag{position:absolute;left:6px;top:6px;background:var(--accent);color:#fff;font-size:11px;font-weight:700;border-radius:4px;padding:1px 6px}
+.gal-title{font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gal-by{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gal-photos{display:grid;gap:10px;padding-top:18px}
+.gal-photos img{display:block;max-width:100%;height:auto;border-radius:8px;margin:0 auto}
+@media (max-width:760px){.gal-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 8px}}

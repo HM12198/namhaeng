@@ -5,7 +5,7 @@ const Cafe = (() => {
   const MENU = [
     ["남행열차", [["notice", "공지사항"]]],
     ["모임", [["meetup", "⚾ 직관메이트"], ["watch", "📺 티관 모임"], ["drink", "🍻 술자리·번개"]]],
-    ["커뮤니티", [["free", "자유게시판"]]],
+    ["커뮤니티", [["gallery", "📷 갤러리"], ["free", "자유게시판"]]],
     ["타이거즈", [["news", "기아 뉴스"]]]
   ];
   // 공식 채널 바로가기 (누구나 볼 수 있는 공개 링크라 코드에 둔다)
@@ -15,7 +15,7 @@ const Cafe = (() => {
     ["팀스토어 (공식 굿즈)", "https://teamstore.tigers.co.kr/"],
     ["기아 타이거즈 공식 홈", "https://tigers.co.kr"]
   ];
-  const NAME = { notice: "공지사항", meetup: "직관메이트 구하기", watch: "티관 모임", drink: "술자리·번개", bungae: "번개·기타", free: "자유게시판" };
+  const NAME = { notice: "공지사항", meetup: "직관메이트 구하기", watch: "티관 모임", drink: "술자리·번개", bungae: "번개·기타", gallery: "갤러리", free: "자유게시판" };
 
   // 모임 양식: 게시판마다 칸이 다르고, 값은 posts.meta 에 저장한다
   const { TEAMS, PARKS, gameDay, teamShort } = Sched;
@@ -89,7 +89,7 @@ const Cafe = (() => {
         error ? fail(error) : (toast(meta.status === "closed" ? "모집을 마감했어요" : "다시 모집해요"), reload());
       } }, m.status === "closed" ? "다시 모집하기" : "모집 마감하기") : null);
   }
-  const WRITABLE = ["meetup", "watch", "drink", "free"];
+  const WRITABLE = ["meetup", "watch", "drink", "gallery", "free"];
   let user, isStaff, side, content;
 
   const day = s => new Date(s).toLocaleDateString("ko-KR", { year: "2-digit", month: "2-digit", day: "2-digit" }).replace(/\s/g, "").replace(/\.$/, "");
@@ -147,12 +147,14 @@ const Cafe = (() => {
     const rows = data.map(p => h("tr", { class: p.pinned ? "pinned" : "" },
       h("td", { class: "t" }, h("a", { href: "#post/" + p.id },
         !board ? h("span", { class: "bd" }, BOARD_KO[p.board]) : null, p.pinned ? h("span", { class: "pin" }, "공지") : null,
-        isMeet(p) ? statusTag(p.meta) : null, p.title,
+        isMeet(p) ? statusTag(p.meta) : null, p.board === "gallery" ? "📷 " : null, p.title,
         isMeet(p) ? h("span", { class: "cnt-att" }, ` 🙋${p.attendees?.[0]?.count || 0}/${p.meta.people}`) : null,
         p.comments?.[0]?.count ? h("span", { class: "cnt-cm" }, ` [${p.comments[0].count}]`) : null)),
       h("td", { class: "a" }, authorName(p)), h("td", { class: "d" }, day(p.created_at))));
-    content.replaceChildren(...top,
-      h("div", { class: "list-head" }, h("h2", {}, title), canWrite ? h("a", { class: "btn primary small", href: "#write/" + board }, "글쓰기") : null),
+    const head = h("div", { class: "list-head" }, h("h2", {}, title), canWrite ? h("a", { class: "btn primary small", href: "#write/" + board }, board === "gallery" ? "📷 사진 올리기" : "글쓰기") : null);
+    if (board === "gallery" && !keyword)
+      return content.replaceChildren(...top, head, data.length ? Gallery.grid(data, authorName) : h("p", { class: "empty" }, "아직 사진이 없어요. 직관·티관·모임 사진을 올려 주세요!"));
+    content.replaceChildren(...top, head,
       data.length ? h("table", { class: "posts" },
         h("thead", {}, h("tr", {}, h("th", {}, "제목"), h("th", { class: "a" }, "작성자"), h("th", { class: "d" }, "작성일"))),
         h("tbody", {}, rows)) : h("p", { class: "empty" }, keyword ? "찾는 글이 없어요." : "아직 글이 없어요. 첫 글을 남겨 주세요!"));
@@ -169,6 +171,7 @@ const Cafe = (() => {
       h("div", { class: "by" }, h("b", {}, authorName(p)), h("span", { class: "meta" }, when(p.created_at))),
       isMeet(p) ? meetCard(p, mine || isStaff, () => post(id)) : null,
       isMeet(p) ? attendBox(p, mine) : null,
+      p.board === "gallery" ? Gallery.photos(p.meta) : null,
       h("div", { class: "body" }, p.body || ""),
       h("div", { class: "row end" },
         isStaff && p.board === "notice" ? h("button", { class: "btn small", onclick: async () => {
@@ -179,7 +182,9 @@ const Cafe = (() => {
         mine || isStaff ? h("button", { class: "btn small danger", onclick: async () => {
           if (!confirm("이 글을 지울까요?")) return;
           const { error } = await sb.from("posts").delete().eq("id", p.id);
-          error ? fail(error) : (toast("지웠어요"), go("#board/" + p.board), sidebar());
+          if (error) return fail(error);
+          if (p.board === "gallery") await Gallery.remove(p.meta?.photos);
+          toast("지웠어요"); go("#board/" + p.board); sidebar();
         } }, "삭제") : null,
         h("a", { class: "btn small", href: "#board/" + p.board }, "목록")),
       commentBox(p)));
@@ -260,15 +265,18 @@ const Cafe = (() => {
     const body = h("textarea", { maxlength: 5000, placeholder: "내용을 입력해 주세요", rows: 12 });
     if (old) { title.value = old.title; body.value = old.body || ""; }
     const forms = Object.fromEntries(Object.keys(KINDS).filter(k => boards.includes(k)).map(k => [k, meetForm(k, old?.board === k ? old.meta : {})]));
+    const pics = boards.includes("gallery") ? Gallery.picker(user.id, old?.board === "gallery" ? old.meta : {}) : null;
     const sync = () => {
       const on = !!forms[sel.value];
       Object.entries(forms).forEach(([k, f]) => { f.hidden = k !== sel.value; });
+      if (pics) pics.hidden = sel.value !== "gallery";
       title.placeholder = on ? "제목 (비워 두면 자동으로 만들어요)" : "제목을 입력해 주세요";
       body.placeholder = on ? "하고 싶은 말 (예: 응원 열심히 하실 분, 초보 환영!)" : "내용을 입력해 주세요";
       body.rows = on ? 5 : 12;
+      if (sel.value === "gallery") { title.placeholder = "제목 (비워 두면 자동으로 만들어요)"; body.placeholder = "사진 설명 (예: 오늘 챔필 분위기 미쳤다 🔥)"; body.rows = 4; }
     };
     sel.addEventListener("change", sync); sync();
-    content.replaceChildren(h("section", { class: "editor" }, h("h2", {}, old ? "글 수정" : "카페 글쓰기"), sel, Object.values(forms), title, body,
+    content.replaceChildren(h("section", { class: "editor" }, h("h2", {}, old ? "글 수정" : "카페 글쓰기"), sel, Object.values(forms), pics, title, body,
       h("div", { class: "row end" }, h("a", { class: "btn", href: old ? "#post/" + old.id : "#board/" + board }, "취소"),
         h("button", { class: "btn primary", onclick: async e => {
           const row = { board: sel.value, title: title.value.trim(), body: body.value.trim(), meta: {} };
@@ -279,13 +287,22 @@ const Cafe = (() => {
             row.meta = v;
             if (!row.title) row.title = form.makeTitle(v).slice(0, 80);
           }
+          let removed = [];
+          if (row.board === "gallery") {
+            if (!pics.count()) return toast("사진을 한 장 이상 골라 주세요");
+            if (!row.title) row.title = `[${pics.tag()}] 사진 ${pics.count()}장`;
+            e.target.disabled = true;
+            try { ({ meta: row.meta, removed } = await pics.save(t => { e.target.textContent = t; })); }
+            catch (err) { e.target.disabled = false; e.target.textContent = old ? "수정 완료" : "등록"; return fail(err); }
+          }
           if (!row.title) return toast("제목을 적어 주세요");
           e.target.disabled = true;
           const { data, error } = old
             ? await sb.from("posts").update(row).eq("id", old.id).select("id").single()
             : await sb.from("posts").insert(row).select("id").single();
-          e.target.disabled = false;
+          e.target.disabled = false; e.target.textContent = old ? "수정 완료" : "등록";
           if (error) return fail(error);
+          if (removed.length) await Gallery.remove(removed);
           toast(old ? "고쳤어요" : "올렸어요"); sidebar(); go("#post/" + data.id);
         } }, old ? "수정 완료" : "등록"))));
     (forms[sel.value]?.querySelector("input,select") || title).focus();

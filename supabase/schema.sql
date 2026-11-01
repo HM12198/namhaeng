@@ -151,3 +151,7 @@ grant select, insert, update, delete on public.games to authenticated;
 -- can_read_post(pid): posts 읽기 규칙과 같은 판정 (security definer)
 -- comments: 읽을 수 있는 글에만 회원 이상이 씀, 본인·운영진이 지움
 -- attendees(post_id, user_id): 모집중인 모임 글에 본인만 신청, 본인·모임장·운영진이 뺌
+
+-- 갤러리 (실제 적용본: 마이그레이션 namhaeng_gallery)
+-- posts.board 에 'gallery' 추가, posts edit 정책 허용 게시판에 'gallery' 추가
+-- storage 버킷 gallery: 비공개, 3MB, jpeg/png/webp. 회원 읽기, 자기 폴더(<uid>/)에만 올리기, 본인·운영진 지우기
