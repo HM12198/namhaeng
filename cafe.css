@@ -9,7 +9,7 @@
 
 main .wrap:has(.cafe){max-width:1040px}
 .cafe{display:grid;grid-template-columns:220px minmax(0,1fr);gap:20px;align-items:start}
-.side{display:grid;gap:10px;position:sticky;top:12px;min-width:0}
+.side{display:grid;gap:10px;min-width:0}
 .cafe-info{background:var(--surface);border:1px solid var(--line);border-top:2px solid var(--ink);padding:14px;display:grid;gap:10px}
 .cafe-info .row{display:flex;gap:10px;align-items:center}
 .cafe-info img{border-radius:8px;flex:0 0 auto}
