@@ -146,3 +146,8 @@ create policy "games read" on public.games for select to authenticated using (pu
 create policy "games write" on public.games for all to authenticated
   using (public.my_role() in ('staff','owner')) with check (public.my_role() in ('staff','owner'));
 grant select, insert, update, delete on public.games to authenticated;
+
+-- 댓글·모임 참석 신청 (실제 적용본: 마이그레이션 namhaeng_comments_attendees)
+-- can_read_post(pid): posts 읽기 규칙과 같은 판정 (security definer)
+-- comments: 읽을 수 있는 글에만 회원 이상이 씀, 본인·운영진이 지움
+-- attendees(post_id, user_id): 모집중인 모임 글에 본인만 신청, 본인·모임장·운영진이 뺌

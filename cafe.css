@@ -147,3 +147,22 @@ header .wrap{max-width:1040px}
 .md-game.ps .md-vs b:first-child{color:var(--board-ink)}
 .day-games li.ps b{color:#c98a1c}
 @media (max-width:760px){.chip .sr{display:none}.matchday::after{display:none}}
+/* 참석 신청 */
+.attend{margin-top:12px;border:1px solid var(--line);border-radius:8px;padding:12px 14px;display:grid;gap:8px}
+.attend-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.attend-list{margin:0;padding-left:22px;display:flex;flex-wrap:wrap;gap:4px 18px;font-size:14px}
+.attend-list li.wait{color:var(--muted)}
+.attend .hint{margin:0}
+button.x{border:0;background:none;color:var(--muted);cursor:pointer;font-size:15px;padding:0 4px;line-height:1}
+button.x:hover{color:var(--accent)}
+.cnt-att{color:var(--muted);font-size:12px;margin-left:4px}
+.cnt-cm{color:var(--accent);font-size:13px;font-weight:700}
+/* 댓글 */
+.comments{border-top:2px solid var(--ink);margin-top:18px;padding-top:12px;display:grid;gap:10px}
+.comments h3{margin:0;font-size:15px}
+.cm-list{list-style:none;margin:0;padding:0;display:grid}
+.cm-list li{padding:10px 0;border-bottom:1px solid var(--line)}
+.cm-by{display:flex;gap:8px;align-items:baseline;font-size:14px}
+.cm-by .x{margin-left:auto}
+.cm-body{white-space:pre-wrap;margin-top:4px;font-size:14px;line-height:1.6}
+.cm-write{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end}

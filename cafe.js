@@ -139,7 +139,7 @@ const Cafe = (() => {
   async function list(board, keyword, top = []) {
     const title = keyword ? `"${keyword}" 검색 결과` : board ? NAME[board] : "전체글보기";
     const canWrite = board ? (WRITABLE.includes(board) || (board === "notice" && isStaff)) : false;
-    let q = sb.from("posts").select("id,board,title,pinned,created_at,meta,profiles(nickname,kakao_name)").neq("board", "staff");
+    let q = sb.from("posts").select("id,board,title,pinned,created_at,meta,profiles(nickname,kakao_name),comments(count),attendees(count)").neq("board", "staff");
     if (board) q = q.eq("board", board);
     if (keyword) q = q.ilike("title", `%${keyword.replace(/[%_]/g, "")}%`);
     const { data, error } = await q.order("pinned", { ascending: false }).order("created_at", { ascending: false }).limit(100);
@@ -147,7 +147,9 @@ const Cafe = (() => {
     const rows = data.map(p => h("tr", { class: p.pinned ? "pinned" : "" },
       h("td", { class: "t" }, h("a", { href: "#post/" + p.id },
         !board ? h("span", { class: "bd" }, BOARD_KO[p.board]) : null, p.pinned ? h("span", { class: "pin" }, "공지") : null,
-        isMeet(p) ? statusTag(p.meta) : null, p.title)),
+        isMeet(p) ? statusTag(p.meta) : null, p.title,
+        isMeet(p) ? h("span", { class: "cnt-att" }, ` 🙋${p.attendees?.[0]?.count || 0}/${p.meta.people}`) : null,
+        p.comments?.[0]?.count ? h("span", { class: "cnt-cm" }, ` [${p.comments[0].count}]`) : null)),
       h("td", { class: "a" }, authorName(p)), h("td", { class: "d" }, day(p.created_at))));
     content.replaceChildren(...top,
       h("div", { class: "list-head" }, h("h2", {}, title), canWrite ? h("a", { class: "btn primary small", href: "#write/" + board }, "글쓰기") : null),
@@ -166,6 +168,7 @@ const Cafe = (() => {
       h("h2", {}, p.title),
       h("div", { class: "by" }, h("b", {}, authorName(p)), h("span", { class: "meta" }, when(p.created_at))),
       isMeet(p) ? meetCard(p, mine || isStaff, () => post(id)) : null,
+      isMeet(p) ? attendBox(p, mine) : null,
       h("div", { class: "body" }, p.body || ""),
       h("div", { class: "row end" },
         isStaff && p.board === "notice" ? h("button", { class: "btn small", onclick: async () => {
@@ -178,7 +181,73 @@ const Cafe = (() => {
           const { error } = await sb.from("posts").delete().eq("id", p.id);
           error ? fail(error) : (toast("지웠어요"), go("#board/" + p.board), sidebar());
         } }, "삭제") : null,
-        h("a", { class: "btn small", href: "#board/" + p.board }, "목록"))));
+        h("a", { class: "btn small", href: "#board/" + p.board }, "목록")),
+      commentBox(p)));
+  }
+
+  // 모임 참석 신청: 누구나 "참석할게요", 모임장·운영진은 명단에서 뺄 수 있다
+  function attendBox(p, mine) {
+    const box = h("section", { class: "attend" });
+    const nameOf = a => a.profiles?.nickname || a.profiles?.kakao_name || "알 수 없음";
+    async function load() {
+      const { data, error } = await sb.from("attendees").select("user_id,created_at,profiles(nickname,kakao_name)").eq("post_id", p.id).order("created_at");
+      if (error) return fail(error);
+      const joined = data.some(a => a.user_id === user.id), full = data.length >= p.meta.people;
+      const closed = p.meta.status === "closed";
+      box.replaceChildren(
+        h("div", { class: "attend-head" }, h("b", {}, `🙋 참석 ${data.length} / ${p.meta.people}명`),
+          joined ? h("button", { class: "btn small", onclick: async () => {
+            const { error } = await sb.from("attendees").delete().eq("post_id", p.id).eq("user_id", user.id);
+            error ? fail(error) : (toast("참석을 취소했어요"), load());
+          } }, "참석 취소")
+          : closed ? h("span", { class: "hint" }, "모집이 마감됐어요")
+          : h("button", { class: "btn small primary", onclick: async () => {
+            if (full && !confirm("모집 인원이 다 찼어요. 그래도 대기로 올릴까요?")) return;
+            const { error } = await sb.from("attendees").insert({ post_id: p.id });
+            error ? fail(error) : (toast("참석 신청했어요!"), load());
+          } }, full ? "대기 신청" : "참석할게요")),
+        data.length ? h("ol", { class: "attend-list" }, data.map((a, i) => h("li", { class: i >= p.meta.people ? "wait" : "" },
+          nameOf(a), i >= p.meta.people ? h("span", { class: "hint" }, " (대기)") : null,
+          (mine || isStaff) && a.user_id !== user.id ? h("button", { class: "x", title: "명단에서 빼기", onclick: async () => {
+            if (!confirm(nameOf(a) + " 님을 명단에서 뺄까요?")) return;
+            const { error } = await sb.from("attendees").delete().eq("post_id", p.id).eq("user_id", a.user_id);
+            error ? fail(error) : load();
+          } }, "×") : null)))
+          : h("p", { class: "hint" }, "아직 참석자가 없어요. 첫 번째로 손 들어 주세요!"));
+    }
+    load();
+    return box;
+  }
+
+  // 댓글
+  function commentBox(p) {
+    const box = h("section", { class: "comments" });
+    const input = h("textarea", { maxlength: 1000, rows: 3, placeholder: "댓글을 남겨 주세요" });
+    async function load() {
+      const { data, error } = await sb.from("comments").select("id,body,created_at,author,profiles(nickname,kakao_name)").eq("post_id", p.id).order("created_at");
+      if (error) return fail(error);
+      box.replaceChildren(h("h3", {}, `댓글 ${data.length}`),
+        h("ul", { class: "cm-list" }, data.map(c => h("li", {},
+          h("div", { class: "cm-by" }, h("b", {}, authorName(c)), c.author === p.author ? h("span", { class: "tag" }, "작성자") : null,
+            h("span", { class: "meta" }, when(c.created_at)),
+            c.author === user.id || isStaff ? h("button", { class: "x", title: "댓글 지우기", onclick: async () => {
+              if (!confirm("댓글을 지울까요?")) return;
+              const { error } = await sb.from("comments").delete().eq("id", c.id);
+              error ? fail(error) : load();
+            } }, "×") : null),
+          h("div", { class: "cm-body" }, c.body)))),
+        h("div", { class: "cm-write" }, input, h("button", { class: "btn primary small", onclick: async e => {
+          const body = input.value.trim();
+          if (!body) return toast("댓글을 적어 주세요");
+          e.target.disabled = true;
+          const { error } = await sb.from("comments").insert({ post_id: p.id, body });
+          e.target.disabled = false;
+          if (error) return fail(error);
+          input.value = ""; load();
+        } }, "등록")));
+    }
+    load();
+    return box;
   }
 
   // 새 글이면 old 없이, 수정이면 old = 기존 글
