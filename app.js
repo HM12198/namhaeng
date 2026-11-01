@@ -4,7 +4,7 @@ const NH = (() => {
   const ready = cfg.SUPABASE_URL && cfg.SUPABASE_ANON_KEY;
   const sb = ready ? window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY) : null;
   const ROLE_KO = { pending: "승인 대기", member: "회원", staff: "운영진", owner: "방장", banned: "강퇴" };
-  const BOARD_KO = { notice: "공지", meetup: "직관 모임", free: "자유", staff: "운영진" };
+  const BOARD_KO = { notice: "공지", meetup: "직관", watch: "티관", drink: "술자리", bungae: "번개", free: "자유", staff: "운영진" };
 
   // 화면 조각은 전부 이걸로 만든다 (textContent만 써서 글 내용이 HTML로 해석되지 않게)
   function h(tag, props = {}, ...kids) {

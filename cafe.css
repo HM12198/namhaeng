@@ -69,3 +69,69 @@ table.posts{width:100%;border-collapse:collapse;font-size:14px;table-layout:fixe
 header .wrap{max-width:1040px}
 .menu a.ext::after{content:"↗";margin-left:auto;color:var(--muted);font-size:12px}
 .menu a.ext::before{content:"◎"}
+.mate-form{display:grid;gap:8px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px}
+.mate-form[hidden]{display:none}
+.mate-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 14px}
+.mate-grid .lab{font-size:13px;font-weight:700}
+.mate-grid input,.mate-grid select{background:var(--surface)}
+.st{display:inline-block;font-size:12px;font-weight:700;padding:1px 7px;border-radius:99px;margin-right:6px;vertical-align:1px}
+.st.open{background:var(--ok-soft);color:var(--ok)}
+.st.closed{background:var(--line);color:var(--muted)}
+.mate-card{margin-top:16px;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:14px 16px;display:grid;gap:10px;background:var(--bg)}
+.mate-top b{font-size:15px}
+.mate-card dl{margin:0;display:grid;grid-template-columns:max-content 1fr;gap:6px 16px;font-size:14px}
+.mate-card dt{color:var(--muted)}
+.mate-card dd{margin:0;font-weight:500}
+.mate-card .btn{justify-self:start}
+@media (max-width:760px){.mate-grid{grid-template-columns:1fr}}
+/* 오늘의 매치데이 */
+.matchday{background:var(--board);color:var(--board-ink);border-radius:10px;padding:16px 18px;display:grid;gap:8px;margin-bottom:16px;position:relative;overflow:hidden}
+.matchday::after{content:"";position:absolute;right:-40px;bottom:18px;width:160px;height:18px;background:#d3172f;clip-path:polygon(100% 0,0 45%,0 60%,100% 100%);opacity:.85}
+.matchday .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.2em;color:var(--gold)}
+.md-game{display:grid;gap:4px}
+.md-vs{display:flex;align-items:baseline;gap:10px;font-family:var(--f-display);font-size:30px;line-height:1.1}
+.md-vs b:first-child{color:#ff5a6e}
+.md-vs span{font-size:16px;opacity:.6}
+.md-info{font-size:14px;opacity:.9}
+.md-off{font-size:18px;font-weight:700}
+.dday{color:var(--gold)}
+.md-result{font-weight:700;font-size:15px}
+.md-result.r-승{color:#7ee2a0}.md-result.r-패{color:#ff8a98}
+.md-note{font-size:13px;opacity:.75}
+.md-go{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:4px;position:relative;z-index:1}
+.md-go .btn{background:#ffffff14;color:var(--board-ink);border-color:#ffffff33}
+.md-cnt{font-size:13px;color:var(--gold);font-weight:700}
+/* 경기 캘린더 */
+.schedule{border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:22px}
+.cal-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.cal-head h3{margin:0;font-size:17px}
+.cal-legend{display:flex;gap:8px;align-items:center;margin:8px 0;font-size:12px}
+.cal-legend .hint{margin:0 0 0 auto;font-size:12px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px}
+.cal-w{text-align:center;font-size:12px;color:var(--muted);padding:4px 0}
+.cal-w.sun{color:var(--accent)}.cal-w.sat{color:#3d6fd8}
+.cal-cell{min-height:64px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);font:inherit;padding:4px;display:flex;flex-direction:column;align-items:stretch;gap:2px;text-align:left;cursor:pointer;min-width:0}
+.cal-cell.blank{border:0;background:none;cursor:default}
+.cal-cell:hover{border-color:var(--muted)}
+.cal-cell.today{border:2px solid var(--accent)}
+.cal-cell.picked{background:var(--accent-soft)}
+.cal-d{font-size:12px;color:var(--muted)}
+.chip{display:inline-flex;gap:3px;align-items:baseline;font-size:12px;font-weight:700;border-radius:4px;padding:1px 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chip.home{background:var(--accent);color:#fff}
+.chip.away{background:var(--board);color:var(--board-ink)}
+.chip i{font-style:normal;font-weight:400;opacity:.8}
+.chip small{font-weight:400;opacity:.85;font-size:11px}
+.chip em{font-style:normal;background:#ffffff33;border-radius:3px;padding:0 3px}
+.chip.r-취소{opacity:.5;text-decoration:line-through}
+.cal-day{margin-top:12px;padding-top:12px;border-top:1px dashed var(--line);display:grid;gap:8px}
+.cal-day[hidden]{display:none}
+.cal-day h4{margin:0;font-size:15px}
+.day-games{margin:0;padding-left:18px;display:grid;gap:6px;font-size:14px}
+.day-games .btn{margin-left:4px}
+@media (max-width:760px){
+  .cal-cell{min-height:46px;padding:2px}
+  .chip{font-size:11px;padding:1px 2px;justify-content:center}
+  .chip i,.chip small,.chip em{display:none}
+  .md-vs{font-size:26px}
+  .cal-legend .hint{display:none}
+}
