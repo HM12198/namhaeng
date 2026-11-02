@@ -61,10 +61,13 @@ const NH = (() => {
   }
 
   function nicknameForm(user, after) {
-    const inp = h("input", { value: user.nickname, maxlength: 30, placeholder: "이름/연도/성별/지역 (예: 박기아/95/남/광주)" });
+    const inp = h("input", { value: user.nickname, maxlength: 30, placeholder: "이름(성 빼고)/연도/성별/지역 (예: 호명/98/남/서산)" });
     return h("div", { class: "row" }, inp, h("button", { class: "btn primary", onclick: async () => {
-      const nickname = inp.value.trim();
+      let nickname = inp.value.trim().replace(/\s*\/\s*/g, "/");
       if (!nickname) return toast("닉네임을 적어 주세요");
+      // 양식은 성을 뺀 이름: "김호명/98/…" → "호명/98/…"
+      const fixed = nickname.replace(/^(남궁|황보|제갈|선우|독고|사공|서문)?([가-힣])?([가-힣]{2})\//, (m, two, one, given) => (two && !one) || one ? given + "/" : m);
+      if (fixed !== nickname) { nickname = fixed; inp.value = fixed; toast("양식에 맞게 성은 빼고 저장할게요"); }
       const { error } = await sb.from("profiles").update({ nickname }).eq("id", user.id);
       if (error) return fail(error);
       user.nickname = nickname; toast("저장했어요"); after && after();

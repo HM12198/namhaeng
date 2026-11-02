@@ -310,7 +310,7 @@ const Cafe = (() => {
 
   function me() {
     content.replaceChildren(h("section", { class: "card" }, h("h2", {}, "내 정보"),
-      h("p", { class: "hint" }, "닉네임은 단톡방과 똑같이 맞춰 주세요. (이름/연도/성별/지역)"),
+      h("p", { class: "hint" }, "닉네임은 단톡방과 똑같이 맞춰 주세요. 이름은 성 빼고 (예: 호명/98/남/서산)"),
       NH.nicknameForm(user, sidebar)));
   }
 
