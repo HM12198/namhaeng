@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-07T22:34:22+09:00",
+ "updated": "2026-11-08T19:46:56+09:00",
  "source": "KBO",
  "games": [
   {
@@ -2095,29 +2095,7 @@
    "home": "삼성",
    "park": "대구 삼성 라이온즈 파크",
    "tv": "MBC",
-   "score": "",
-   "note": ""
-  },
-  {
-   "game_date": "2026-11-10",
-   "game_time": "18:30",
-   "series": "한국시리즈",
-   "away": "삼성",
-   "home": "KT",
-   "park": "수원 KT 위즈파크",
-   "tv": "KBS2",
-   "score": "",
-   "note": ""
-  },
-  {
-   "game_date": "2026-11-11",
-   "game_time": "18:30",
-   "series": "한국시리즈",
-   "away": "삼성",
-   "home": "KT",
-   "park": "수원 KT 위즈파크",
-   "tv": "SBS",
-   "score": "",
+   "score": "1:12",
    "note": ""
   }
  ]
